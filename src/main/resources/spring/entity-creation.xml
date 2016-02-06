@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <bean id="user1" class="learn.spring.entity.User">
+        <constructor-arg value="1"/>
+        <constructor-arg value="vasya@mail.com"/>
+        <constructor-arg value="Valiliy"/>
+        <constructor-arg value="Pupkin"/>
+    </bean>
+
+    <bean id="user2" class="learn.spring.entity.User">
+        <constructor-arg value="2"/>
+        <constructor-arg value="ivan@mail.com"/>
+        <constructor-arg value="Ivan"/>
+        <constructor-arg value="Petrov"/>
+    </bean>
+
+    <bean id="user3" class="learn.spring.entity.User">
+        <constructor-arg value="3"/>
+        <constructor-arg value="orest@mail.com"/>
+        <constructor-arg value="Orest"/>
+        <constructor-arg value="Lytui"/>
+    </bean>
+
+    <bean id="user4" class="learn.spring.entity.User">
+        <constructor-arg value="4"/>
+        <constructor-arg value="orest_next@mail.com"/>
+        <constructor-arg value="Orest"/>
+        <constructor-arg value="Melin"/>
+    </bean>
+
+    <util:map key-type="java.lang.Integer" value-type="learn.spring.entity.User" id="usersByIdMap">
+        <entry key="#{user1.id}" value-ref="user1"/>
+        <entry key="#{user2.id}" value-ref="user2"/>
+        <entry key="#{user3.id}" value-ref="user3"/>
+        <entry key="#{user4.id}" value-ref="user4"/>
+    </util:map>
+
+</beans>
