@@ -3,6 +3,8 @@ package learn.spring.entity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+
 
 public class User {
 
@@ -10,12 +12,16 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private Date birthDay;
 
-    public User(Integer id, String email, String fName, String lName) {
+    private Map<Integer, Ticket> bookedTickets = new HashMap<Integer, Ticket>();
+
+    public User(Integer id, String email, String fName, String lName, Date birthDay) {
         this.id = id;
         this.email = email;
         this.firstName = fName;
         this.lastName = lName;
+        this.birthDay = birthDay;
     }
 
     public Integer getId() {
@@ -52,6 +58,22 @@ public class User {
 
     public String getFullName() {
         return getFirstName() + " " + getLastName();
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Map getBookedTickets() {
+        return bookedTickets;
+    }
+
+    public void addTicket(Ticket ticket) {
+        bookedTickets.put(bookedTickets.size() + 1, ticket);
     }
 
     @Override

@@ -2,6 +2,7 @@ package learn.spring.dao;
 
 import learn.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -51,5 +52,10 @@ public class UserDAO {
             }
         }
         return users;
+    }
+
+    public void register(User u){
+        UsersByIdMap.put(u.getId(), u);
+        UsersByEmailMap.put(u.getEmail(), u);
     }
 }

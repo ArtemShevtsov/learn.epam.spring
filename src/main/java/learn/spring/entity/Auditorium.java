@@ -43,4 +43,26 @@ public class Auditorium {
         return getName() + ". all seats: " + String.valueOf(getNumberOfSeats()) + " and VIP: " +
                 Arrays.deepToString(getVipSeats());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Auditorium that = (Auditorium) o;
+
+        if (!name.equals(that.name)) return false;
+        if (!numberOfSeats.equals(that.numberOfSeats)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(vipSeats, that.vipSeats);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + numberOfSeats.hashCode();
+        result = 31 * result + Arrays.hashCode(vipSeats);
+        return result;
+    }
 }

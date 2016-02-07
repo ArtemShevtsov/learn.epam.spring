@@ -7,11 +7,20 @@
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd" />
+    </bean>
+
     <bean id="user1" class="learn.spring.entity.User">
         <constructor-arg value="1"/>
         <constructor-arg value="vasya@mail.com"/>
         <constructor-arg value="Valiliy"/>
         <constructor-arg value="Pupkin"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1989-01-18" />
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="user2" class="learn.spring.entity.User">
@@ -19,6 +28,11 @@
         <constructor-arg value="ivan@mail.com"/>
         <constructor-arg value="Ivan"/>
         <constructor-arg value="Petrov"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1972-07-08" />
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="user3" class="learn.spring.entity.User">
@@ -26,6 +40,11 @@
         <constructor-arg value="orest@mail.com"/>
         <constructor-arg value="Orest"/>
         <constructor-arg value="Lytui"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1992-11-05" />
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="user4" class="learn.spring.entity.User">
@@ -33,6 +52,11 @@
         <constructor-arg value="orest_next@mail.com"/>
         <constructor-arg value="Orest"/>
         <constructor-arg value="Melin"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1999-13-11" />
+            </bean>
+        </constructor-arg>
     </bean>
 
     <util:map key-type="java.lang.Integer" value-type="learn.spring.entity.User" id="usersByIdMap">
@@ -41,5 +65,6 @@
         <entry key="#{user3.id}" value-ref="user3"/>
         <entry key="#{user4.id}" value-ref="user4"/>
     </util:map>
+
 
 </beans>

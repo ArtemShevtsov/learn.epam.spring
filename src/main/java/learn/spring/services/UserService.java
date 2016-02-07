@@ -37,4 +37,8 @@ public class UserService {
             System.out.printf("Key: %s; Value: %s\n", user.getKey(), user.getValue());
         }
     }
+
+    public void register(User u){
+        userDAO.register(u);
+    }
 }
