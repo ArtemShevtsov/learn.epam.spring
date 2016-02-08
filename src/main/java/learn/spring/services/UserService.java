@@ -2,12 +2,15 @@ package learn.spring.services;
 
 import learn.spring.dao.UserDAO;
 import static learn.spring.dao.UserDAO.*;
+
+import learn.spring.entity.Ticket;
 import learn.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -40,5 +43,13 @@ public class UserService {
 
     public void register(User u){
         userDAO.register(u);
+    }
+
+    public void remove(User user) {
+        userDAO.remove(user);
+    }
+
+    public Set<Ticket> getBookedTickets(User user){
+        return user.getTicketSet();
     }
 }

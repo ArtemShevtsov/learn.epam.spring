@@ -1,5 +1,6 @@
 package learn.spring.dao;
 
+import learn.spring.entity.Ticket;
 import learn.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,5 +58,10 @@ public class UserDAO {
     public void register(User u){
         UsersByIdMap.put(u.getId(), u);
         UsersByEmailMap.put(u.getEmail(), u);
+    }
+
+    public void remove(User user){
+        UsersByEmailMap.remove(user.getEmail());
+        UsersByIdMap.remove(user.getId());
     }
 }

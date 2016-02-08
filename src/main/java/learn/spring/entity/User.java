@@ -1,8 +1,5 @@
 package learn.spring.entity;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 
@@ -14,7 +11,8 @@ public class User {
     private String lastName;
     private Date birthDay;
 
-    private Map<Integer, Ticket> bookedTickets = new HashMap<Integer, Ticket>();
+    private Map<Integer, Ticket> ticketMap = new HashMap<Integer, Ticket>();
+    private Set<Ticket> ticketSet = new HashSet<Ticket>();
 
     public User(Integer id, String email, String fName, String lName, Date birthDay) {
         this.id = id;
@@ -68,12 +66,21 @@ public class User {
         this.birthDay = birthDay;
     }
 
-    public Map getBookedTickets() {
-        return bookedTickets;
+    public Map getTicketMap() {
+        return ticketMap;
     }
 
-    public void addTicket(Ticket ticket) {
-        bookedTickets.put(bookedTickets.size() + 1, ticket);
+    public Set<Ticket> getTicketSet() {
+        return ticketSet;
+    }
+
+    public void setTicketSet(Set<Ticket> ticketSet) {
+        this.ticketSet = ticketSet;
+    }
+
+    public void bookTicket(Ticket ticket) {
+        ticketMap.put(ticketMap.size() + 1, ticket);
+        ticketSet.add(ticket);
     }
 
     @Override
