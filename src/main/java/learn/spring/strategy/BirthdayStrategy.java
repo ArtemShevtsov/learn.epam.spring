@@ -4,7 +4,7 @@ import learn.spring.entity.Ticket;
 import learn.spring.entity.User;
 import java.util.Calendar;
 
-public class BitthdayStrategy implements  DiscountStrategy {
+public class BirthdayStrategy implements  DiscountStrategy {
 
     public int getDiscountPercent(Ticket ticket, User user){
         Calendar ticketCal = Calendar.getInstance();
