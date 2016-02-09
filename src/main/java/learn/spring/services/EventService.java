@@ -4,7 +4,6 @@ import learn.spring.dao.EventDAO;
 import learn.spring.entity.Auditorium;
 import learn.spring.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
