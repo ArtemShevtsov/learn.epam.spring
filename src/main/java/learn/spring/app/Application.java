@@ -23,6 +23,10 @@ public class Application {
     @Autowired
     AuditoriumService auditoriumService;
 
+    /**
+     * In Application I tried to use both XML and Annotation configurations
+     * @param args
+     */
     public static void main(String[] args) {
         ConfigurableApplicationContext xmlCtx = new ClassPathXmlApplicationContext("spring/context.xml");
         AnnotationConfigApplicationContext annotationCtx = new AnnotationConfigApplicationContext();

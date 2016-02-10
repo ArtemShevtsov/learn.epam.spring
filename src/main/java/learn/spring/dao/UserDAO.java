@@ -23,11 +23,19 @@ public class UserDAO {
     @Autowired
     ApplicationContext applicationContext;
 
+    /**
+     * Injecting from XML Spring configuration file
+     * @param usersByIdMap
+     */
     @Resource
     public void setUsersByIdMap(Map<Integer, User> usersByIdMap) {
         UsersByIdMap = usersByIdMap;
     }
 
+    /**
+     * Used for injecting  UsersByEmailMap Map
+     * Read all User Beans from XML configuration and puting in the Map
+     */
     @PostConstruct
     public void init(){
         UsersByEmailMap = new HashMap<String, User>();

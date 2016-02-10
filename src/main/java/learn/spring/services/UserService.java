@@ -50,6 +50,6 @@ public class UserService {
     }
 
     public Set<Ticket> getBookedTickets(User user){
-        return user.getTicketSet();
+        return userDAO.getUserById(user.getId()).getTicketSet();
     }
 }

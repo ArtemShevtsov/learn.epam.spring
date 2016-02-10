@@ -3,6 +3,9 @@ package learn.spring.entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class represent many to many relation between event and auditorium.
+ */
 public class EventAuditorium {
     private Event event;
     private Auditorium auditorium;
