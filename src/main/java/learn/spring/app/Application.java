@@ -1,14 +1,11 @@
 package learn.spring.app;
 
+import learn.spring.aspects.CounterAspect;
+import learn.spring.aspects.DiscountAspect;
 import learn.spring.configuration.AuditoriumsConfig;
 import learn.spring.dao.EventAuditoriumDAO;
-import learn.spring.entity.Auditorium;
-import learn.spring.entity.Event;
-import learn.spring.entity.EventAuditorium;
-import learn.spring.entity.User;
-import learn.spring.services.AuditoriumService;
-import learn.spring.services.EventService;
-import learn.spring.services.UserService;
+import learn.spring.entity.*;
+import learn.spring.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class Application {
@@ -26,6 +24,17 @@ public class Application {
     AuditoriumService auditoriumService;
     @Autowired
     EventService eventService;
+    @Autowired
+    BookingService bookingService;
+    @Autowired
+    CounterAspect counterAspect;
+    @Autowired
+    DiscountAspect discountAspect;
+    @Autowired
+    DiscountService discountService;
+
+    private Ticket t, t1,t2;
+    private User u1,u2;
 
     /**
      * In Application I tried to use both XML and Annotation configurations
@@ -38,10 +47,68 @@ public class Application {
         annotationCtx.refresh();
 
         Application app = xmlCtx.getBean(Application.class);
+        app.initializeData();
         app.showUsersByName("oRest");
         app.printAuditoriums();
         app.printEvents();
         app.showEventsAndAuditoriums();
+        app.showCounterAspectWork();
+        app.showDiscountAspectWork();
+    }
+
+    private void initializeData(){
+        t = new Ticket();
+        t1 = new Ticket();
+        t2 = new Ticket();
+        u1 = userService.getUserById(2);
+        u2 = userService.getUserById(3);
+
+        eventService.getByName("The Martian").getBasePrice();
+        eventService.getByName("Django Unchained");
+        eventService.getByName("Django Unchained").getBasePrice();
+        t.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
+        t.setSeat(8);
+        bookingService.bookTicket(u1, t);
+        t1.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
+        t1.setSeat(9);
+        bookingService.bookTicket(u1, t1);
+        t2.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("Interstellar")).iterator().next());
+        t2.setSeat(5);
+        bookingService.bookTicket(u2, t2);
+        discountService.getDiscount(u1, eventService.getByName("The Martian"), t.getEventAuditorium().getDateAndTime());
+        discountService.getDiscount(u1, eventService.getByName("The Martian"), t1.getEventAuditorium().getDateAndTime());
+        discountService.getDiscount(u2, eventService.getByName("Interstellar"), t2.getEventAuditorium().getDateAndTime());
+    }
+
+    private void showCounterAspectWork(){
+        System.out.println("\nCounter Aspect Work:");
+        System.out.println("\n\tGet Event By Name:");
+        for (Map.Entry e: counterAspect.getCounterGetByNameEvent().entrySet()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        }
+
+        System.out.println("\n\tEvent Price Accessed:");
+        for (Map.Entry e: counterAspect.getCounterPriceRequested().entrySet()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        }
+
+        System.out.println("\n\tBooking Event Counter:");
+        for (Map.Entry e: counterAspect.getCounterBookingEvent().entrySet()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        }
+    }
+
+    private void showDiscountAspectWork(){
+        System.out.println("\nDiscount Aspect Work:");
+        System.out.println("\n\tGet Total Discounts:");
+        for (Map.Entry e: discountAspect.getCounterDiscountGiven().entrySet()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        }
+
+        System.out.println("\n\tGet Discounts for Users:");
+        for (Map.Entry e: discountAspect.getCounterDiscountGivenByUser().entrySet()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        }
     }
 
     public void showUsersByName(String name){

@@ -1,7 +1,5 @@
 package learn.spring.services;
 
-import static learn.spring.dao.EventAuditoriumDAO.*;
-
 import static learn.spring.dao.TicketDAO.*;
 
 import learn.spring.dao.EventAuditoriumDAO;
@@ -43,7 +41,7 @@ public class BookingService {
                     (price*getRatingPriceCoefficient(event)) +
                     (price*getSeatPriceCoefficient(auditorium, seat));
         }
-        return sumPrice - (sumPrice*discountService.getDiscount(user, event, date)/100.);
+        return sumPrice - (sumPrice*discountService.getDiscount(user, event, date).getPercent()/100.);
     }
 
     // FIXME: 0.5% never used

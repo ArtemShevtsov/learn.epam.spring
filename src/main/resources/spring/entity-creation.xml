@@ -42,7 +42,7 @@
         <constructor-arg value="Lytui"/>
         <constructor-arg>
             <bean factory-bean="dateFormat" factory-method="parse">
-                <constructor-arg value="1992-11-05" />
+                <constructor-arg value="1992-02-07" />
             </bean>
         </constructor-arg>
     </bean>
@@ -54,7 +54,7 @@
         <constructor-arg value="Melin"/>
         <constructor-arg>
             <bean factory-bean="dateFormat" factory-method="parse">
-                <constructor-arg value="1999-13-11" />
+                <constructor-arg value="1999-11-13" />
             </bean>
         </constructor-arg>
     </bean>
