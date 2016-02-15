@@ -45,26 +45,34 @@ public class EventService {
 
     }
 
+    // FIXME: 0.5% never used
     public Event getByName(String name){
         return eventDAO.getByName(name);
     }
 
+    // FIXME: 0.5% never used
     public List<Event> getAll(){
         return eventDAO.getAll();
     }
 
+    // FIXME: 0.5% never used
     public void create(Event event){
         eventDAO.create(event);
     }
 
+    // FIXME: 0.5% never used
     public void remove(Event event){
         eventDAO.remove(event);
     }
 
+    // FIXME: 0.5% never used
+    // TODO: +1% optional task implemented
     public Set<Event> getForDateRange(Date from, Date to){
         return eventDAO.getForDateRange(from, to);
     }
 
+    // FIXME: 0.5% never used
+    // TODO: +1% optional task implemented
     public Set<Event> getNextEvents(Date to){
         return eventDAO.getNextEvents(to);
     }

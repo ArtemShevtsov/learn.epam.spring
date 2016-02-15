@@ -12,6 +12,7 @@
         <spring.version>4.2.4.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
+        <aspectj.version>1.8.8</aspectj.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
     </dependencies>
 

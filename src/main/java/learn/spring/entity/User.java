@@ -95,14 +95,11 @@ public class User {
 
         User user = (User) o;
 
-        if (!id.equals(user.id)) return false;
         if (!email.equals(user.email)) return false;
         if (!firstName.equals(user.firstName)) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (!birthDay.equals(user.birthDay)) return false;
-        if (ticketMap != null ? !ticketMap.equals(user.ticketMap) : user.ticketMap != null) return false;
-        return ticketSet != null ? ticketSet.equals(user.ticketSet) : user.ticketSet == null;
-
+        return (!id.equals(user.id));
     }
 
     @Override

@@ -16,10 +16,12 @@ public class AuditoriumService {
         return auditoriumDAO.getAuditoriums();
     }
 
+    // FIXME: 0.5% never used
     public Integer getSeatsNumber(Auditorium auditorium){
         return auditoriumDAO.getSeatsNumber(auditorium);
     }
 
+    // FIXME: 0.5% never used
     public String getVipSeats(Auditorium auditorium){
         return auditoriumDAO.getVipSeats(auditorium);
     }

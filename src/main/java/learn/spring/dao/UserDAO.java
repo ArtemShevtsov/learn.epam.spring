@@ -17,59 +17,43 @@ import java.util.Map;
 @Component
 public class UserDAO {
 
-    static public Map<Integer, User> UsersByIdMap;
-    static public Map<String, User> UsersByEmailMap;
-
     @Autowired
-    ApplicationContext applicationContext;
-
-    /**
-     * Injecting from XML Spring configuration file
-     * @param usersByIdMap
-     */
-    @Resource
-    public void setUsersByIdMap(Map<Integer, User> usersByIdMap) {
-        UsersByIdMap = usersByIdMap;
-    }
-
-    /**
-     * Used for injecting  UsersByEmailMap Map
-     * Read all User Beans from XML configuration and puting in the Map
-     */
-    @PostConstruct
-    public void init(){
-        UsersByEmailMap = new HashMap<String, User>();
-        Map<String, User> userBeans = applicationContext.getBeansOfType(User.class);
-        for (Map.Entry user: userBeans.entrySet()) {
-            UsersByEmailMap.put(((User)user.getValue()).getEmail(), (User)user.getValue());
-        }
-    }
+    public List<User> usersList;
 
     public User getUserById(Integer id){
-        return UsersByIdMap.get(id);
+        for(User u: usersList){
+            if(u.getId().equals(id)){
+                return u;
+            }
+        }
+        return null;
     }
 
     public User getUserByEmail(String email){
-        return UsersByEmailMap.get(email);
+        for(User u: usersList){
+            if(u.getEmail().equals(email)){
+                return u;
+            }
+        }
+        return null;
     }
 
     public List<User> getUsersByName(String name){
         List<User> users = new ArrayList<User>();
-        for (Map.Entry userEntry : UsersByIdMap.entrySet()) {
-            if(((User)userEntry.getValue()).getFirstName().toLowerCase().equals(name.toLowerCase())){
-                users.add((User)userEntry.getValue());
+        for(User u: usersList){
+            if(u.getFirstName().toLowerCase().equals(name.toLowerCase())){
+                users.add(u);
             }
         }
+
         return users;
     }
 
     public void register(User u){
-        UsersByIdMap.put(u.getId(), u);
-        UsersByEmailMap.put(u.getEmail(), u);
+        usersList.add(u);
     }
 
     public void remove(User user){
-        UsersByEmailMap.remove(user.getEmail());
-        UsersByIdMap.remove(user.getId());
+        usersList.remove(user);
     }
 }

@@ -1,6 +1,5 @@
 package learn.spring.service;
 
-import com.sun.deploy.util.ArrayUtil;
 import learn.spring.configuration.TestConfiguration;
 import learn.spring.dao.UserDAO;
 import learn.spring.entity.*;
@@ -11,10 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,6 +23,9 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfiguration.class})
 public class UserServiceTest {
+
+    // TODO: +3% tests are partially implemented
+
     @Autowired
     User testUser;
     EventAuditorium testEventAuditorium;

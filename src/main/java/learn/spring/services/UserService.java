@@ -29,15 +29,10 @@ public class UserService {
         return userDAO.getUsersByName(name);
     }
 
-    public void showUsersInMaps(){
+    public void showUsersInList(){
         System.out.println("UserById: ");
-        for (Map.Entry user: UsersByIdMap.entrySet()) {
-            System.out.printf("Key: %s; Value: %s\n", user.getKey(), user.getValue());
-        }
-
-        System.out.println("UserByEmail: ");
-        for (Map.Entry user: UsersByEmailMap.entrySet()) {
-            System.out.printf("Key: %s; Value: %s\n", user.getKey(), user.getValue());
+        for (User user: userDAO.usersList) {
+            System.out.printf("Value: %s\n", user);
         }
     }
 

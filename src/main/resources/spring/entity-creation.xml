@@ -59,12 +59,12 @@
         </constructor-arg>
     </bean>
 
-    <util:map key-type="java.lang.Integer" value-type="learn.spring.entity.User" id="usersByIdMap">
-        <entry key="#{user1.id}" value-ref="user1"/>
-        <entry key="#{user2.id}" value-ref="user2"/>
-        <entry key="#{user3.id}" value-ref="user3"/>
-        <entry key="#{user4.id}" value-ref="user4"/>
-    </util:map>
+    <!--<util:map key-type="java.lang.Integer" value-type="learn.spring.entity.User" id="usersByIdMap">-->
+        <!--<entry key="#{user1.id}" value-ref="user1"/>-->
+        <!--<entry key="#{user2.id}" value-ref="user2"/>-->
+        <!--<entry key="#{user3.id}" value-ref="user3"/>-->
+        <!--<entry key="#{user4.id}" value-ref="user4"/>-->
+    <!--</util:map>-->
 
 
 </beans>

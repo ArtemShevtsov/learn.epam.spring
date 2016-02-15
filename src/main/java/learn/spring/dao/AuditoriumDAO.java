@@ -14,21 +14,10 @@ import java.util.Map;
 @Component
 public class AuditoriumDAO {
     @Autowired
-    ApplicationContext applicationContext;
-
-    public static List<Auditorium> Auditoriums;
-
-    @PostConstruct
-    public void init(){
-        Auditoriums = new ArrayList<Auditorium>();
-        Map<String, Auditorium> auditoriumBeans = applicationContext.getBeansOfType(Auditorium.class);
-        for (Map.Entry user: auditoriumBeans.entrySet()) {
-            Auditoriums.add((Auditorium) user.getValue());
-        }
-    }
+    public List<Auditorium> auditoriums;
 
     public List<Auditorium> getAuditoriums(){
-        return Auditoriums;
+        return auditoriums;
     }
 
     public Integer getSeatsNumber(Auditorium auditorium){

@@ -9,31 +9,30 @@ import java.util.*;
 
 @Component
 public class EventAuditoriumDAO {
-    public static Map<Event, Set<EventAuditorium>> EventAuditoriumByEvent = new HashMap<Event, Set<EventAuditorium>>();
-    public static Map<Auditorium, Set<EventAuditorium>> EventAuditoriumByAuditorium = new HashMap<Auditorium, Set<EventAuditorium>>();
-    public static Set<EventAuditorium> EventAuditoriumSet = new HashSet<EventAuditorium>();
+
+    public static List<EventAuditorium> eventAuditoriumList = new ArrayList<EventAuditorium>();
 
     public void assignEventAuditorium(EventAuditorium ea){
-        EventAuditoriumSet.add(ea);
-        if(EventAuditoriumByEvent.get(ea.getEvent()) == null){
-            Set s = new HashSet<EventAuditorium>();
-            s.add(ea);
-            EventAuditoriumByEvent.put(ea.getEvent(), s);
-        } else {
-            Set s = EventAuditoriumByEvent.get(ea.getEvent());
-            s.add(ea);
-            EventAuditoriumByEvent.put(ea.getEvent(), s);
-        }
+        eventAuditoriumList.add(ea);
+    }
 
-        EventAuditoriumByAuditorium.put(ea.getAuditorium(), EventAuditoriumSet);
-        if(EventAuditoriumByAuditorium.get(ea.getAuditorium()) == null){
-            Set s = new HashSet<EventAuditorium>();
-            s.add(ea);
-            EventAuditoriumByAuditorium.put(ea.getAuditorium(), s);
-        } else {
-            Set s = EventAuditoriumByAuditorium.get(ea.getAuditorium());
-            s.add(ea);
-            EventAuditoriumByAuditorium.put(ea.getAuditorium(), s);
+    static public Set<EventAuditorium> getEventAuditoriumByEvent(Event e){
+        Set<EventAuditorium> eventAuditoriums = new HashSet<EventAuditorium>();
+        for(EventAuditorium ea: eventAuditoriumList){
+            if(ea.getEvent().equals(e)){
+                eventAuditoriums.add(ea);
+            }
         }
+        return eventAuditoriums;
+    }
+
+    static public Set<EventAuditorium> getEventAuditoriumByAuditorium(Auditorium a){
+        Set<EventAuditorium> eventAuditoriums = new HashSet<EventAuditorium>();
+        for(EventAuditorium ea: eventAuditoriumList){
+            if(ea.getAuditorium().equals(a)){
+                eventAuditoriums.add(ea);
+            }
+        }
+        return eventAuditoriums;
     }
 }

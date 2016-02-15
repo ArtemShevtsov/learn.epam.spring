@@ -4,6 +4,7 @@ import static learn.spring.dao.EventAuditoriumDAO.*;
 
 import static learn.spring.dao.TicketDAO.*;
 
+import learn.spring.dao.EventAuditoriumDAO;
 import learn.spring.dao.TicketDAO;
 import learn.spring.exception.SessionNotFoundException;
 import learn.spring.entity.*;
@@ -31,6 +32,7 @@ public class BookingService {
      * @return Summary price for all seats
      * @throws SessionNotFoundException
      */
+    // FIXME: 0.5% never used
     public Double getTicketPrice(Event event, Date date, int[] seats, User user) throws SessionNotFoundException {
         Double price = event.getBasePrice();
         Double sumPrice = 0.;
@@ -41,13 +43,15 @@ public class BookingService {
                     (price*getRatingPriceCoefficient(event)) +
                     (price*getSeatPriceCoefficient(auditorium, seat));
         }
-        return sumPrice + (sumPrice*discountService.getDiscount(user, event, date));
+        return sumPrice - (sumPrice*discountService.getDiscount(user, event, date)/100.);
     }
 
+    // FIXME: 0.5% never used
     public boolean bookTicket(User user, Ticket ticket){
         return ticketDAO.bookTicket(user, ticket);
     }
 
+    // FIXME: 0.5% never used
     public Set<Ticket> getTicketsForEvent(Event event, Date date){
         Calendar c1 = CalendarUtils.getCalendarWithoutTime(date);
         Calendar c2 = Calendar.getInstance();
@@ -83,7 +87,7 @@ public class BookingService {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        Set<EventAuditorium> eventAuditoriumSet = EventAuditoriumByEvent.get(event);
+        Set<EventAuditorium> eventAuditoriumSet = EventAuditoriumDAO.getEventAuditoriumByEvent(event);
         for (EventAuditorium ea: eventAuditoriumSet){
             cSession.setTime(ea.getDateAndTime());
             cSession.set(Calendar.SECOND, 0);

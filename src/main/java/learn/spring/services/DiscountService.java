@@ -12,19 +12,9 @@ import java.util.*;
 
 @Service
 public class DiscountService {
+
     @Autowired
-    ApplicationContext applicationContext;
-
     List<DiscountStrategy> discountStrategyList;
-
-    @PostConstruct
-    public void init(){
-        Map<String, DiscountStrategy> beans = applicationContext.getBeansOfType(DiscountStrategy.class);
-        discountStrategyList = new ArrayList<DiscountStrategy>();
-        for(Map.Entry strategy: beans.entrySet()){
-            discountStrategyList.add((DiscountStrategy)strategy.getValue());
-        }
-    }
 
     public int getDiscount(User user, Event event, Date date){
         int[] discounts = new int[discountStrategyList.size()];
