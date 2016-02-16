@@ -45,17 +45,14 @@ public class EventService {
 
     }
 
-    // FIXME: 0.5% never used
     public Event getByName(String name){
         return eventDAO.getByName(name);
     }
 
-    // FIXME: 0.5% never used
     public List<Event> getAll(){
         return eventDAO.getAll();
     }
 
-    // FIXME: 0.5% never used
     public void create(Event event){
         eventDAO.create(event);
     }

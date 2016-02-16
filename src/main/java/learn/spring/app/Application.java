@@ -27,11 +27,12 @@ public class Application {
     @Autowired
     BookingService bookingService;
     @Autowired
+    DiscountService discountService;
+
+    @Autowired
     CounterAspect counterAspect;
     @Autowired
     DiscountAspect discountAspect;
-    @Autowired
-    DiscountService discountService;
 
     private Ticket t, t1,t2;
     private User u1,u2;

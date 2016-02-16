@@ -44,7 +44,6 @@ public class BookingService {
         return sumPrice - (sumPrice*discountService.getDiscount(user, event, date).getPercent()/100.);
     }
 
-    // FIXME: 0.5% never used
     public boolean bookTicket(User user, Ticket ticket){
         return ticketDAO.bookTicket(user, ticket);
     }
