@@ -2,7 +2,7 @@ package learn.spring.app;
 
 import learn.spring.aspects.CounterAspect;
 import learn.spring.aspects.DiscountAspect;
-import learn.spring.configuration.AuditoriumsConfig;
+import learn.spring.configuration.beans.AuditoriumsConfig;
 import learn.spring.dao.EventAuditoriumDAO;
 import learn.spring.entity.*;
 import learn.spring.services.*;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,6 +29,8 @@ public class Application {
     BookingService bookingService;
     @Autowired
     DiscountService discountService;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Autowired
     CounterAspect counterAspect;
@@ -48,6 +51,10 @@ public class Application {
         annotationCtx.refresh();
 
         Application app = xmlCtx.getBean(Application.class);
+
+        app.jdbcTemplate.update("create table users(id integer primary key, name varchar(30))");
+        app.jdbcTemplate.update("insert into users(id, name) values (?,?)",1,"WWW");
+
         app.initializeData();
         app.showUsersByName("oRest");
         app.printAuditoriums();

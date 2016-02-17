@@ -1,4 +1,4 @@
-package learn.spring.configuration;
+package learn.spring.configuration.aspects;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

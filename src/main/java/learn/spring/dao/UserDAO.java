@@ -5,6 +5,7 @@ import learn.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,9 @@ public class UserDAO {
 
     @Autowired
     public List<User> usersList;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     public User getUserById(Integer id){
         for(User u: usersList){

@@ -1,4 +1,4 @@
-package learn.spring.configuration;
+package learn.spring.configuration.beans;
 
 
 import learn.spring.entity.Event;
