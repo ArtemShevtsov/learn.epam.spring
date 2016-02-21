@@ -10,21 +10,21 @@ import org.springframework.context.annotation.Configuration;
 public class EventsConfig {
     @Bean
     public Event theMartian(){
-        return new Event("The Martian", 120., EventRating.HIGHT, 144);
+        return new Event(1, "The Martian", 120., EventRating.HIGHT, 144);
     }
 
     @Bean
     public Event interstellar(){
-        return new Event("Interstellar", 100.5, EventRating.HIGHT, 169);
+        return new Event(2, "Interstellar", 100.5, EventRating.HIGHT, 169);
     }
 
     @Bean
     public Event djangoUnchained(){
-        return new Event("Django Unchained", 80., EventRating.MIDDLE, 165);
+        return new Event(3, "Django Unchained", 80., EventRating.MIDDLE, 165);
     }
 
     @Bean
     Event badFilm(){
-        return new Event("Some Bad Film", 50.25, EventRating.LOW, 93);
+        return new Event(4, "Some Bad Film", 50.25, EventRating.LOW, 93);
     }
 }

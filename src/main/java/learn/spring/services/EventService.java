@@ -49,6 +49,10 @@ public class EventService {
         return eventDAO.getByName(name);
     }
 
+    public Event getById(Integer id){
+        return  eventDAO.getById(id);
+    }
+
     public List<Event> getAll(){
         return eventDAO.getAll();
     }

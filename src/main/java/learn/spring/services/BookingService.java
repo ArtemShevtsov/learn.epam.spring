@@ -20,6 +20,8 @@ public class BookingService {
 
     @Autowired
     TicketDAO ticketDAO;
+    @Autowired
+    EventAuditoriumDAO eventAuditoriumDAO;
 
     /**
      * Calculate price for each seat and then calculate discount
@@ -84,7 +86,7 @@ public class BookingService {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        Set<EventAuditorium> eventAuditoriumSet = EventAuditoriumDAO.getEventAuditoriumByEvent(event);
+        Set<EventAuditorium> eventAuditoriumSet = eventAuditoriumDAO.getEventAuditoriumByEvent(event);
         for (EventAuditorium ea: eventAuditoriumSet){
             cSession.setTime(ea.getDateAndTime());
             cSession.set(Calendar.SECOND, 0);

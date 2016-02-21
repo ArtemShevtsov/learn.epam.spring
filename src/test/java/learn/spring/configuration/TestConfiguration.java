@@ -13,12 +13,12 @@ public class TestConfiguration {
 
     @Bean
     public Event testEvent(){
-        return new Event("Film", 50., EventRating.HIGHT, 102);
+        return new Event(1, "Film", 50., EventRating.HIGHT, 102);
     }
 
     @Bean
     public Auditorium testAuditorium(){
-        return new Auditorium("Kinozal", 50, new Integer[]{9,10});
+        return new Auditorium(1, "Kinozal", 50, new Integer[]{9,10});
     }
 
     @Bean

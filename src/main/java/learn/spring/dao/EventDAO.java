@@ -3,40 +3,69 @@ package learn.spring.dao;
 import learn.spring.entity.Auditorium;
 import learn.spring.entity.Event;
 import learn.spring.entity.EventAuditorium;
+import learn.spring.entity.EventRating;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Component
-public class EventDAO {
+public class EventDAO implements EntityDAO<Event> {
+    @Autowired
+    JdbcTemplate jdbcTemplateEmbedded;
     @Autowired
     public List<Event> eventsList;
-
     @Autowired
     EventAuditoriumDAO eventAuditoriumDAO;
 
-    public Event getByName(String name){
+    private static final String INSERT_QUERY = "INSERT INTO dict_events(id, name, basePrice, ratingId, minutesLength) VALUES (?,?,?,?,?);";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM dict_events;";
+    private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM dict_events WHERE lower(name) = ?;";
+    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dict_events WHERE id = ?;";
+    private static final String DELETE_QUERY = "DELETE FROM dict_events WHERE id = ?;";
+    private static final String SELECT_DATE_RANGE_QUERY = "SELECT e.* FROM dict_events e " +
+            "JOIN event_auditorium ea ON (ea.event_id = e.id)" +
+            "where ea.event_date between ? and ?;";
+
+    /**
+     * Events from Java Configuration stores in database
+     */
+    @PostConstruct
+    private void registerEventsFromSpringConfig(){
         for(Event e: eventsList){
-            if(e.getName().toLowerCase().equals(name.toLowerCase())){
-                return e;
-            }
+            create(e);
         }
-        return null;
+    }
+
+    public Event getByName(String name){
+        Object[] params = {name.toLowerCase()};
+        return jdbcTemplateEmbedded.queryForObject(SELECT_BY_NAME_QUERY, params, entityRowMapper());
+    }
+
+    public Event getById(Integer id){
+        Object[] params = {id};
+        return jdbcTemplateEmbedded.queryForObject(SELECT_BY_ID_QUERY, params, entityRowMapper());
     }
 
     public List<Event> getAll(){
-        return eventsList;
+        return jdbcTemplateEmbedded.query(SELECT_ALL_QUERY, entityRowMapper());
     }
 
     public void create(Event e){
-        eventsList.add(e);
+        jdbcTemplateEmbedded.update(INSERT_QUERY,
+                e.getId(),
+                e.getName(),
+                e.getBasePrice(),
+                e.getRating().getVal(),
+                e.getMinutesLength());
     }
 
     public void remove(Event e){
-        Set<EventAuditorium> evensAuditoriums = EventAuditoriumDAO.getEventAuditoriumByEvent(e);
-        EventAuditoriumDAO.eventAuditoriumList.removeAll(evensAuditoriums);
-
-        eventsList.remove(e);
+        Object[] params = {e.getId()};
+        jdbcTemplateEmbedded.update(DELETE_QUERY, params);
     }
 
     public void assignAuditorium(Event event, Auditorium auditorium, Date date){
@@ -45,23 +74,24 @@ public class EventDAO {
     }
 
     public Set<Event> getForDateRange(Date from, Date to){
-        Set<Event> events = new HashSet<Event>();
-        for(EventAuditorium ea: EventAuditoriumDAO.eventAuditoriumList){
-            if(ea.getDateAndTime().after(from) && ea.getDateAndTime().before(to)){
-                events.add(ea.getEvent());
-            }
-        }
-        return events;
+        Object[] params = {from, to};
+        return new HashSet<>(jdbcTemplateEmbedded.query(SELECT_DATE_RANGE_QUERY, params, entityRowMapper()));
     }
 
     public Set<Event> getNextEvents(Date to){
-        Set<Event> events = new HashSet<Event>();
-        Date now = new Date();
-        for(EventAuditorium ea: EventAuditoriumDAO.eventAuditoriumList){
-            if(ea.getDateAndTime().after(now) && ea.getDateAndTime().before(to)){
-                events.add(ea.getEvent());
-            }
-        }
-        return events;
+        return getForDateRange(new Date(), to);
     }
+
+    @Override
+    public RowMapper<Event> entityRowMapper() {
+
+        return (rs, rowNum) -> new Event(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getDouble("basePrice"),
+                EventRating.valueOf(rs.getInt("ratingId")),
+                rs.getInt("minutesLength")
+        );
+    }
+
 }

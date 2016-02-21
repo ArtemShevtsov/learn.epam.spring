@@ -3,18 +3,27 @@ package learn.spring.entity;
 import java.util.Arrays;
 
 public class Auditorium {
+    private Integer id;
     private String name;
     private Integer numberOfSeats;
     private Integer[] vipSeats;
 
-    public Auditorium(String name, Integer numberOfSeats, Integer[] vipSeats) {
+    public Auditorium(Integer id, String name, Integer numberOfSeats, Integer[] vipSeats) {
+        this.id = id;
         this.name = name;
         this.numberOfSeats = numberOfSeats;
         this.vipSeats = vipSeats;
     }
 
-    public String getName() {
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -51,6 +60,7 @@ public class Auditorium {
 
         Auditorium that = (Auditorium) o;
 
+        if (!id.equals(that.id)) return false;
         if (!name.equals(that.name)) return false;
         if (!numberOfSeats.equals(that.numberOfSeats)) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
@@ -61,6 +71,7 @@ public class Auditorium {
     @Override
     public int hashCode() {
         int result = name.hashCode();
+        result = 31 * result + id.hashCode();
         result = 31 * result + numberOfSeats.hashCode();
         result = 31 * result + Arrays.hashCode(vipSeats);
         return result;

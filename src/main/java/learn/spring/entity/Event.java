@@ -1,16 +1,26 @@
 package learn.spring.entity;
 
 public class Event {
+    private Integer id;
     private String name;
     private Double basePrice;
     private EventRating rating;
     private Integer minutesLength;
 
-    public Event(String name, Double basePrice, EventRating rating, Integer minutesLength) {
+    public Event(Integer id, String name, Double basePrice, EventRating rating, Integer minutesLength) {
+        this.id = id;
         this.name = name;
         this.basePrice = basePrice;
         this.rating = rating;
         this.minutesLength = minutesLength;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -53,13 +63,15 @@ public class Event {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+//        if (o == null || getClass() != o.getClass()) return false; /*Because of Aspects*/
+        if (o == null) return false;
 
         Event event = (Event) o;
 
-        if (!name.equals(event.name)) return false;
-        if (basePrice != null ? !basePrice.equals(event.basePrice) : event.basePrice != null) return false;
-        return minutesLength.equals(event.minutesLength);
+        if (!id.equals(event.getId())) return false;
+        if (!name.equals(event.getName())) return false;
+        if (basePrice != null ? !basePrice.equals(event.getBasePrice()) : event.getBasePrice() != null) return false;
+        return minutesLength.equals(event.getMinutesLength());
 
     }
 

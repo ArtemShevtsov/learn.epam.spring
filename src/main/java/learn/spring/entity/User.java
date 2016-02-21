@@ -85,7 +85,11 @@ public class User {
 
     @Override
     public String toString() {
-        return getFullName() + "(" + getEmail() + ")";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getFullName())
+                .append("(").append(getEmail()).append(")")
+                .append("-").append(getBirthDay());
+        return sb.toString();
     }
 
     @Override

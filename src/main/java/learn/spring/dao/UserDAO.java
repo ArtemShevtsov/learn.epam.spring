@@ -1,63 +1,74 @@
 package learn.spring.dao;
 
-import learn.spring.entity.Ticket;
 import learn.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
-public class UserDAO {
-
+public class UserDAO implements EntityDAO<User> {
+    @Autowired
+    JdbcTemplate jdbcTemplateEmbedded;
     @Autowired
     public List<User> usersList;
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+    private static final String INSERT_QUERY = "INSERT INTO dict_users(id, email, firstName, lastName, birthDay) VALUES (?,?,?,?,?);";
+    private static final String DELETE_QUERY = "DELETE FROM dict_users WHERE id = ?;";
+    private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM dict_users WHERE lower(firstName) = ?;";
+    private static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM dict_users WHERE lower(email) = ?;";
+    private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dict_users WHERE id = ?;";
+
+    /**
+     * Users from Java Configuration stores in database
+     */
+    @PostConstruct
+    private void registerUsersFromSpringConfig(){
+        for(User u: usersList){
+            register(u);
+        }
+    }
 
     public User getUserById(Integer id){
-        for(User u: usersList){
-            if(u.getId().equals(id)){
-                return u;
-            }
-        }
-        return null;
+        Object[] params = {id};
+        return jdbcTemplateEmbedded.queryForObject(SELECT_BY_ID_QUERY, params, entityRowMapper());
     }
 
     public User getUserByEmail(String email){
-        for(User u: usersList){
-            if(u.getEmail().equals(email)){
-                return u;
-            }
-        }
-        return null;
+        Object[] params = {email.toLowerCase()};
+        return jdbcTemplateEmbedded.queryForObject(SELECT_BY_EMAIL_QUERY, params, entityRowMapper());
     }
 
     public List<User> getUsersByName(String name){
-        List<User> users = new ArrayList<User>();
-        for(User u: usersList){
-            if(u.getFirstName().toLowerCase().equals(name.toLowerCase())){
-                users.add(u);
-            }
-        }
-
-        return users;
+        Object[] params = {name.toLowerCase()};
+        return jdbcTemplateEmbedded.query(SELECT_BY_NAME_QUERY, params, entityRowMapper());
     }
 
     public void register(User u){
-        usersList.add(u);
+        jdbcTemplateEmbedded.update(INSERT_QUERY,
+                u.getId(),
+                u.getEmail(),
+                u.getFirstName(),
+                u.getLastName(),
+                u.getBirthDay());
     }
 
     public void remove(User user){
-        usersList.remove(user);
+        jdbcTemplateEmbedded.update(DELETE_QUERY, user.getId());
+    }
+
+
+    @Override
+    public RowMapper<User> entityRowMapper(){
+        return (rs, rowNum) -> new User(
+                rs.getInt("id"),
+                rs.getString("email"),
+                rs.getString("firstName"),
+                rs.getString("lastName"),
+                rs.getDate("birthDay")
+        );
     }
 }

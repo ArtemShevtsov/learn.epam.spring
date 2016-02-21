@@ -1,7 +1,6 @@
 package learn.spring.services;
 
 import learn.spring.dao.UserDAO;
-import static learn.spring.dao.UserDAO.*;
 
 import learn.spring.entity.Ticket;
 import learn.spring.entity.User;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -28,14 +26,14 @@ public class UserService {
     public List<User> getUsersByName(String name){
         return userDAO.getUsersByName(name);
     }
-
+/*
     public void showUsersInList(){
         System.out.println("UserById: ");
         for (User user: userDAO.usersList) {
             System.out.printf("Value: %s\n", user);
         }
     }
-
+*/
     public void register(User u){
         userDAO.register(u);
     }

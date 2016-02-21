@@ -2,6 +2,7 @@ package learn.spring.services;
 
 import learn.spring.dao.AuditoriumDAO;
 import learn.spring.entity.Auditorium;
+import learn.spring.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,10 @@ public class AuditoriumService {
 
     public List<Auditorium> getAuditoriums(){
         return auditoriumDAO.getAuditoriums();
+    }
+
+    public Auditorium getById(Integer id){
+        return  auditoriumDAO.getById(id);
     }
 
     // FIXME: 0.5% never used

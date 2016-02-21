@@ -4,20 +4,28 @@ import learn.spring.aspects.CounterAspect;
 import learn.spring.aspects.DiscountAspect;
 import learn.spring.configuration.beans.AuditoriumsConfig;
 import learn.spring.dao.EventAuditoriumDAO;
+import learn.spring.dao.aspects.CounterAspectDAO;
 import learn.spring.entity.*;
 import learn.spring.services.*;
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 @Component
+@ComponentScan("learn.spring")
 public class Application {
     @Autowired
     UserService userService;
@@ -30,10 +38,14 @@ public class Application {
     @Autowired
     DiscountService discountService;
     @Autowired
-    JdbcTemplate jdbcTemplate;
-
+    EventAuditoriumDAO eventAuditoriumDAO;
     @Autowired
-    CounterAspect counterAspect;
+    JdbcTemplate jdbcTemplateEmbedded;
+
+//    @Autowired
+//    CounterAspect counterAspect;
+    @Autowired
+    CounterAspectDAO counterAspectDAO;
     @Autowired
     DiscountAspect discountAspect;
 
@@ -45,15 +57,10 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
-        ConfigurableApplicationContext xmlCtx = new ClassPathXmlApplicationContext("spring/context.xml");
         AnnotationConfigApplicationContext annotationCtx = new AnnotationConfigApplicationContext();
-        annotationCtx.register(AuditoriumsConfig.class);
+        annotationCtx.register(Application.class);
         annotationCtx.refresh();
-
-        Application app = xmlCtx.getBean(Application.class);
-
-        app.jdbcTemplate.update("create table users(id integer primary key, name varchar(30))");
-        app.jdbcTemplate.update("insert into users(id, name) values (?,?)",1,"WWW");
+        Application app = annotationCtx.getBean(Application.class);
 
         app.initializeData();
         app.showUsersByName("oRest");
@@ -62,6 +69,7 @@ public class Application {
         app.showEventsAndAuditoriums();
         app.showCounterAspectWork();
         app.showDiscountAspectWork();
+        app.eventService.remove(app.eventService.getByName("Interstellar"));
     }
 
     private void initializeData(){
@@ -74,13 +82,13 @@ public class Application {
         eventService.getByName("The Martian").getBasePrice();
         eventService.getByName("Django Unchained");
         eventService.getByName("Django Unchained").getBasePrice();
-        t.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
+        t.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
         t.setSeat(8);
         bookingService.bookTicket(u1, t);
-        t1.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
+        t1.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
         t1.setSeat(9);
         bookingService.bookTicket(u1, t1);
-        t2.setEventAuditorium(EventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("Interstellar")).iterator().next());
+        t2.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByAuditorium(auditoriumService.getById(2)).iterator().next());
         t2.setSeat(5);
         bookingService.bookTicket(u2, t2);
         discountService.getDiscount(u1, eventService.getByName("The Martian"), t.getEventAuditorium().getDateAndTime());
@@ -91,18 +99,19 @@ public class Application {
     private void showCounterAspectWork(){
         System.out.println("\nCounter Aspect Work:");
         System.out.println("\n\tGet Event By Name:");
-        for (Map.Entry e: counterAspect.getCounterGetByNameEvent().entrySet()) {
-            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+
+        for(Event e: counterAspectDAO.getCountedEventsByName()){
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e, counterAspectDAO.getCounterGetByNameVal(e));
         }
 
         System.out.println("\n\tEvent Price Accessed:");
-        for (Map.Entry e: counterAspect.getCounterPriceRequested().entrySet()) {
-            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        for (Event e: counterAspectDAO.getCountedEventsPriceRequested()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e, counterAspectDAO.getCounterPriceRequested(e));
         }
 
         System.out.println("\n\tBooking Event Counter:");
-        for (Map.Entry e: counterAspect.getCounterBookingEvent().entrySet()) {
-            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        for (Event e: counterAspectDAO.getCountedEventsBooked()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e, counterAspectDAO.getCounterBooked(e));
         }
     }
 
@@ -145,7 +154,7 @@ public class Application {
 
     public void showEventsAndAuditoriums(){
         System.out.println("\nEventsAndAuditoriums:");
-        for(EventAuditorium ea: EventAuditoriumDAO.eventAuditoriumList){
+        for(EventAuditorium ea: eventAuditoriumDAO.getAll()){
             System.out.println(ea);
         }
     }

@@ -4,6 +4,13 @@ public class Ticket {
     private EventAuditorium eventAuditorium;
     private Integer seat;
 
+    public Ticket(){}
+
+    public Ticket(EventAuditorium eventAuditorium, Integer seat) {
+        this.eventAuditorium = eventAuditorium;
+        this.seat = seat;
+    }
+
     public EventAuditorium getEventAuditorium() {
         return eventAuditorium;
     }
