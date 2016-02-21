@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CounterAspectDAO {
+public class CounterAspectDAO implements CounterDAO {
     @Autowired
     JdbcTemplate jdbcTemplateEmbedded;
     @Autowired
@@ -33,23 +33,13 @@ public class CounterAspectDAO {
         return qTemplate.replace("[COUNTER_FIELD]", actualVal);
     }
 
-    private int getCount(Object[] params, String query){
-        int count;
-        try {
-            count = jdbcTemplateEmbedded.queryForObject(query, params, Integer.class);
-        } catch (Exception ex){
-            return 0;
-        }
-        return count;
-    }
-
     public void setCounterGetByNameVal(Event e, int counterVal){
         Object[] params = {e.getId(), counterVal};
         jdbcTemplateEmbedded.update(prepareMergeQuery("count_get_by_name"), params);
     }
 
     public Integer getCounterGetByNameVal(Event e) {
-        return getCount(new Object[]{e.getId()}, prepareSelectQuery("count_get_by_name"));
+        return getCount(jdbcTemplateEmbedded, new Object[]{e.getId()}, prepareSelectQuery("count_get_by_name"));
     }
 
     public void setCounterPriceRequested(Event e, int counterVal){
@@ -58,7 +48,7 @@ public class CounterAspectDAO {
     }
 
     public Integer getCounterPriceRequested(Event e) {
-        return getCount(new Object[]{e.getId()}, prepareSelectQuery("count_price_requested"));
+        return getCount(jdbcTemplateEmbedded, new Object[]{e.getId()}, prepareSelectQuery("count_price_requested"));
     }
 
     public void setCounterBooked(Event e, int counterVal){
@@ -67,7 +57,7 @@ public class CounterAspectDAO {
     }
 
     public Integer getCounterBooked(Event e) {
-        return getCount(new Object[]{e.getId()}, prepareSelectQuery("count_booked"));
+        return getCount(jdbcTemplateEmbedded, new Object[]{e.getId()}, prepareSelectQuery("count_booked"));
     }
 
     public List<Event> getCountedEventsByName(){

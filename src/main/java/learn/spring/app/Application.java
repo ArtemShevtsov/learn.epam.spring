@@ -5,8 +5,10 @@ import learn.spring.aspects.DiscountAspect;
 import learn.spring.configuration.beans.AuditoriumsConfig;
 import learn.spring.dao.EventAuditoriumDAO;
 import learn.spring.dao.aspects.CounterAspectDAO;
+import learn.spring.dao.aspects.DiscountAspectDAO;
 import learn.spring.entity.*;
 import learn.spring.services.*;
+import learn.spring.strategy.DiscountStrategy;
 import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,7 +49,7 @@ public class Application {
     @Autowired
     CounterAspectDAO counterAspectDAO;
     @Autowired
-    DiscountAspect discountAspect;
+    DiscountAspectDAO discountAspectDAO;
 
     private Ticket t, t1,t2;
     private User u1,u2;
@@ -118,13 +120,16 @@ public class Application {
     private void showDiscountAspectWork(){
         System.out.println("\nDiscount Aspect Work:");
         System.out.println("\n\tGet Total Discounts:");
-        for (Map.Entry e: discountAspect.getCounterDiscountGiven().entrySet()) {
-            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        for (Class<? extends DiscountStrategy> clazz: discountAspectDAO.getCountedDiscountStrategies()) {
+            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", clazz.getName(), discountAspectDAO.getCounterByClass(clazz));
         }
 
         System.out.println("\n\tGet Discounts for Users:");
-        for (Map.Entry e: discountAspect.getCounterDiscountGivenByUser().entrySet()) {
-            System.out.printf("\t\tKey: %s\n\t\tValue %s\n", e.getKey(), e.getValue());
+        for (Class<? extends DiscountStrategy> clazz: discountAspectDAO.getCountedDiscountStrategies()) {
+            System.out.printf("\t\tDiscount: %s\n", clazz.getName());
+            for(User user: discountAspectDAO.getUsersByDiscountStrategy(clazz)){
+                System.out.printf("\t\t\tUser: %s\n\t\t\tValue: %s\n", user, discountAspectDAO.getCounterByClassAndUser(clazz, user));
+            }
         }
     }
 

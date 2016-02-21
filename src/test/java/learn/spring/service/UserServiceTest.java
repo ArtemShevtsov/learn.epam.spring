@@ -38,7 +38,7 @@ public class UserServiceTest {
     @Mock
     UserDAO userDaoMock;
     @InjectMocks
-    UserService userService = new UserService();
+    UserService userService;
 
     @Before
     public void prepare(){

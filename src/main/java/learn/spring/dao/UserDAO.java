@@ -14,7 +14,7 @@ public class UserDAO implements EntityDAO<User> {
     @Autowired
     JdbcTemplate jdbcTemplateEmbedded;
     @Autowired
-    public List<User> usersList;
+    private List<User> usersList;
 
     private static final String INSERT_QUERY = "INSERT INTO dict_users(id, email, firstName, lastName, birthDay) VALUES (?,?,?,?,?);";
     private static final String DELETE_QUERY = "DELETE FROM dict_users WHERE id = ?;";

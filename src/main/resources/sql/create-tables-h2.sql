@@ -46,7 +46,8 @@ create table dict_event_counter(
     count_booked integer
 );
 
-create table dict_discount_all_counter(
-    class_name varchar (255) unique,
+create table dict_discount_counter(
+    class_name varchar (255),
+    user_id integer,
     discount_count integer
 )

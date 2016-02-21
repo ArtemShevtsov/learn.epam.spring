@@ -1,5 +1,6 @@
 package learn.spring.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -102,8 +103,10 @@ public class User {
         if (!email.equals(user.email)) return false;
         if (!firstName.equals(user.firstName)) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+//        if (!sdf.format(birthDay).equals(sdf.format(user.birthDay))) return false;
         if (!birthDay.equals(user.birthDay)) return false;
-        return (!id.equals(user.id));
+        return id.equals(user.id);
     }
 
     @Override
