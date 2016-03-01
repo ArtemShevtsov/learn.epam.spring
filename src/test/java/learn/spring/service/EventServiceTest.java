@@ -1,9 +1,9 @@
 package learn.spring.service;
 
 import learn.spring.configuration.TestConfiguration;
-import learn.spring.dao.EventDAO;
-import learn.spring.entity.Event;
-import learn.spring.services.EventService;
+import learn.spring.core.dao.EventDAO;
+import learn.spring.core.entity.Event;
+import learn.spring.core.services.EventService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

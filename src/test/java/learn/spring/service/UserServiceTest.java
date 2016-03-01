@@ -1,9 +1,9 @@
 package learn.spring.service;
 
 import learn.spring.configuration.TestConfiguration;
-import learn.spring.dao.UserDAO;
-import learn.spring.entity.*;
-import learn.spring.services.UserService;
+import learn.spring.core.dao.UserDAO;
+import learn.spring.core.entity.*;
+import learn.spring.core.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

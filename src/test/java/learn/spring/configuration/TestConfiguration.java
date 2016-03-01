@@ -1,8 +1,9 @@
 package learn.spring.configuration;
 
-import learn.spring.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import learn.spring.core.entity.Auditorium;
+import learn.spring.core.entity.Event;
+import learn.spring.core.entity.EventRating;
+import learn.spring.core.entity.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

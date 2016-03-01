@@ -1,7 +1,8 @@
 package learn.spring.dao;
 
 
-import learn.spring.entity.User;
+import learn.spring.core.dao.UserDAO;
+import learn.spring.core.entity.User;
 import learn.spring.utils.CalendarUtils;
 import org.junit.After;
 import org.junit.Before;
