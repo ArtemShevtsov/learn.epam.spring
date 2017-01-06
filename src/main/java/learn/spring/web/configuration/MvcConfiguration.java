@@ -9,10 +9,22 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("learn.spring.web")
+@ComponentScan({
+        "learn.spring.core.app",
+        "learn.spring.core.configuration",
+        "learn.spring.core.dao",
+        "learn.spring.core.entity",
+        "learn.spring.core.services",
+        "learn.spring.core.aspects",
+        "learn.spring.web.configuration",
+        "learn.spring.web.controllers"
+})
 public class MvcConfiguration  extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -20,10 +32,34 @@ public class MvcConfiguration  extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        super.configureViewResolvers(registry);
-        registry.jsp("/WEB-INF/views/", ".jsp");
+//    @Override
+//    public void configureViewResolvers(ViewResolverRegistry registry) {
+//        super.configureViewResolvers(registry);
+//        registry.jsp("/WEB-INF/views/", ".jsp");
+//    }
+    @Bean
+    public FreeMarkerViewResolver freeMarkerViewResolver(){
+        FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
+        freeMarkerViewResolver.setPrefix("");
+        freeMarkerViewResolver.setSuffix(".ftl");
+        freeMarkerViewResolver.setCache(true);
+        freeMarkerViewResolver.setOrder(0);
+        return freeMarkerViewResolver;
+    }
+
+    @Bean
+    public ResourceBundleViewResolver resourceBundleViewResolver(){
+        ResourceBundleViewResolver resourceBundleViewResolver = new ResourceBundleViewResolver();
+        resourceBundleViewResolver.setBasename("properties/resource-views-mapping");
+        resourceBundleViewResolver.setOrder(1);
+        return resourceBundleViewResolver;
+    }
+
+    @Bean
+    public FreeMarkerConfigurer freemarkerConfig() {
+        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views/ftl/");
+        return freeMarkerConfigurer;
     }
 
     @Bean
@@ -34,4 +70,5 @@ public class MvcConfiguration  extends WebMvcConfigurerAdapter {
 
         return resolver;
     }
+
 }

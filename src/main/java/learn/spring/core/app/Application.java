@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -55,7 +56,7 @@ public class Application {
         annotationCtx.refresh();
         Application app = annotationCtx.getBean(Application.class);
 
-        app.initializeData();
+//        app.initializeData();
         app.showUsersByName("oRest");
         app.printAuditoriums();
         app.printEvents();
@@ -65,6 +66,7 @@ public class Application {
         app.eventService.remove(app.eventService.getByName("Interstellar"));
     }
 
+    @PostConstruct
     private void initializeData(){
         t = new Ticket();
         t1 = new Ticket();

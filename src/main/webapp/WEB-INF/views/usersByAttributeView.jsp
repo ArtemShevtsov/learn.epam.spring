@@ -5,7 +5,7 @@
 <div class="col-sm-offset-1 col-sm-10">
 
     <legend>
-        Users By Name ${name}:
+        Users By ${attribute} ${attributeName}:
     </legend>
 
     <div>
