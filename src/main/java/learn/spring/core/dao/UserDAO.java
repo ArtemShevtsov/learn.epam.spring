@@ -1,5 +1,6 @@
 package learn.spring.core.dao;
 
+import learn.spring.core.entity.Ticket;
 import learn.spring.core.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class UserDAO implements EntityDAO<User> {

@@ -3,6 +3,7 @@ package learn.spring.core.entity;
 public class Ticket {
     private EventAuditorium eventAuditorium;
     private Integer seat;
+    private User user;
 
     public Ticket(){}
 
@@ -25,6 +26,14 @@ public class Ticket {
 
     public void setSeat(Integer seat) {
         this.seat = seat;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

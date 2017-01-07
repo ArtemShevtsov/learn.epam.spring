@@ -40,6 +40,7 @@ public class DataSourceConfig {
         EmbeddedDatabaseBuilder embeddedDBBuilder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase embeddedDB = embeddedDBBuilder.setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:sql/create-tables-h2.sql")
+                .setName("springH2DataSource")
                 .build();
         return embeddedDB;
     }

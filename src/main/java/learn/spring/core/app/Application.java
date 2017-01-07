@@ -8,6 +8,7 @@ import learn.spring.core.dao.aspects.DiscountAspectDAO;
 import learn.spring.core.entity.*;
 import learn.spring.core.services.*;
 import learn.spring.core.strategy.DiscountStrategy;
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -56,7 +57,7 @@ public class Application {
         annotationCtx.refresh();
         Application app = annotationCtx.getBean(Application.class);
 
-//        app.initializeData();
+        app.initializeData();
         app.showUsersByName("oRest");
         app.printAuditoriums();
         app.printEvents();
@@ -89,6 +90,9 @@ public class Application {
         discountService.getDiscount(u1, eventService.getByName("The Martian"), t.getEventAuditorium().getDateAndTime());
         discountService.getDiscount(u1, eventService.getByName("The Martian"), t1.getEventAuditorium().getDateAndTime());
         discountService.getDiscount(u2, eventService.getByName("Interstellar"), t2.getEventAuditorium().getDateAndTime());
+
+        String url = "jdbc:h2:mem:springH2DataSource";
+        DatabaseManagerSwing.main(new String[] { "--url", url, "--user", "sa", "--password", "" });
     }
 
     private void showCounterAspectWork(){

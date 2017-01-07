@@ -1,5 +1,6 @@
 package learn.spring.core.services;
 
+import learn.spring.core.dao.TicketDAO;
 import learn.spring.core.dao.UserDAO;
 
 import learn.spring.core.entity.Ticket;
@@ -15,6 +16,9 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
+//    @Autowired
+//    private TicketDAO ticketDAO;
+
     public User getUserById(Integer id){
         return userDAO.getUserById(id);
     }
@@ -26,14 +30,7 @@ public class UserService {
     public List<User> getUsersByName(String name){
         return userDAO.getUsersByName(name);
     }
-/*
-    public void showUsersInList(){
-        System.out.println("UserById: ");
-        for (User user: userDAO.usersList) {
-            System.out.printf("Value: %s\n", user);
-        }
-    }
-*/
+
     public void register(User u){
         userDAO.register(u);
     }
@@ -42,7 +39,8 @@ public class UserService {
         userDAO.remove(user);
     }
 
-    public Set<Ticket> getBookedTickets(User user){
-        return userDAO.getUserById(user.getId()).getTicketSet();
-    }
+//    public Set<Ticket> getBookedTicketsByUser(User user){
+////        return ticketDAO.getBookedTicketsByUser(user);
+//        return userDAO.getUserById(user.getId()).getTicketSet();
+//    }
 }
