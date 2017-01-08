@@ -30,6 +30,6 @@
             </table>
         </#list>
     <#else>
-        <h4>Sorry, there no users(s) with ${attribute} ${attributeName}</h4>
+        <h4>Sorry, there no Users(s) found!</h4>
     </#if>
 </div>

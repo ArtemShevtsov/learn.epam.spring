@@ -30,21 +30,31 @@ public class BookedTicketsController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value = "booked/by-user/{id}", method = GET, produces = {"application/pdf"})
-    public ModelAndView getBookedByUser(@PathVariable int id, @RequestHeader("Accept") String header){
+    @RequestMapping(value = "booked/by-user/{id}", method = GET)
+    public ModelAndView getBookedByUserView(@PathVariable int id, @RequestHeader("Accept") String header){
         User user = userService.getUserById(id);
         Set<Ticket> bookedTickets = ticketService.getBookedTicketsByUser(user);
-        ModelAndView mv = new ModelAndView("bookedTicketsByUser");
+        ModelAndView mv = new ModelAndView();
+        if(header.contains("application/pdf")){
+            mv.setViewName("bookedTicketsByUserPdf");
+        } else {
+            mv.setViewName("bookedTicketsByUser.ftl");
+        }
         mv.addObject("tickets", bookedTickets);
         mv.addObject("user", user);
         return mv;
     }
 
-    @RequestMapping(value = "booked/by-event/{id}", method = GET, produces = {"application/pdf"})
-    public ModelAndView getBookedByEvent(@PathVariable int id, @RequestHeader("Accept") String header){
+    @RequestMapping(value = "booked/by-event/{id}", method = GET)
+    public ModelAndView getBookedByEventView(@PathVariable int id, @RequestHeader("Accept") String header){
         Event event = eventService.getById(id);
         Set<Ticket> bookedTickets = ticketService.getBookedTicketsByEvent(event);
-        ModelAndView mv = new ModelAndView("bookedTicketsByEvent");
+        ModelAndView mv = new ModelAndView();
+        if(header.contains("application/pdf")){
+            mv.setViewName("bookedTicketsByEventPdf");
+        } else {
+            mv.setViewName("bookedTicketsByEvent");
+        }
         mv.addObject("tickets", bookedTickets);
         mv.addObject("event", event);
         return mv;
