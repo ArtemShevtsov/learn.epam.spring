@@ -1,5 +1,9 @@
 <div id="header">
-  <h2>User(s) By ${attribute} ${attributeName}:</h2>
+    <#if attribute??>
+        <h2>User(s) By ${attribute} ${attributeName}:</h2>
+    <#else>
+        <h2>All Users:</h2>
+    </#if>
 </div>
 <hr>
 

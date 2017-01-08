@@ -26,6 +26,7 @@ public class EventAuditoriumDAO implements EntityDAO<EventAuditorium> {
     private static final String SELECT_BY_AUDITORY_QUERY = "SELECT * FROM event_auditorium WHERE auditorium_id = ?;";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM event_auditorium WHERE id = ?;";
     private static final String SELECT_ID_QUERY = "SELECT id FROM event_auditorium WHERE event_id = ? and auditorium_id = ? and event_date = ?;";
+    private static final String SELECT_COUNT_QUERY = "SELECT count(id) FROM event_auditorium WHERE event_id = ? and auditorium_id = ? and event_date = ?;";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM event_auditorium;";
 
     public void assignEventAuditorium(EventAuditorium ea){
@@ -55,6 +56,12 @@ public class EventAuditoriumDAO implements EntityDAO<EventAuditorium> {
     public Integer getId(EventAuditorium ea){
         Object[] params = {ea.getEvent().getId(), ea.getAuditorium().getId(), ea.getDateAndTime()};
         return jdbcTemplateEmbedded.queryForObject(SELECT_ID_QUERY, params, Integer.class);
+    }
+
+    public boolean isEventAuditoriumPresent(EventAuditorium ea){
+        Object[] params = {ea.getEvent().getId(), ea.getAuditorium().getId(), ea.getDateAndTime()};
+        Integer count = jdbcTemplateEmbedded.queryForObject(SELECT_COUNT_QUERY, params, Integer.class);
+        return count != null && count > 0;
     }
 
     @Override

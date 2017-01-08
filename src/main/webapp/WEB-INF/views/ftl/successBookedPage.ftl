@@ -1,0 +1,1 @@
+<h2>Congratulations! Your ticket was booked successfully!</h2>

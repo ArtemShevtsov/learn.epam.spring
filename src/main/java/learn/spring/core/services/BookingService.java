@@ -51,6 +51,10 @@ public class BookingService {
         return ticketDAO.bookTicket(user, ticket);
     }
 
+    public boolean isEventAuditoriumPresent(EventAuditorium ea){
+        return eventAuditoriumDAO.isEventAuditoriumPresent(ea);
+    }
+
     // FIXME: 0.5% never used
     public Set<Ticket> getTicketsForEvent(Event event, Date date){
         Calendar c1 = CalendarUtils.getCalendarWithoutTime(date);

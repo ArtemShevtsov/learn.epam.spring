@@ -21,7 +21,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * Created by aftor on 07.01.17.
  */
 @Controller
-@RequestMapping("pdf")
+@RequestMapping("booked")
 public class BookedTicketsController {
     @Autowired
     TicketService ticketService;
@@ -30,7 +30,7 @@ public class BookedTicketsController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value = "booked/by-user/{id}", method = GET)
+    @RequestMapping(value = "by-user/{id}", method = GET)
     public ModelAndView getBookedByUserView(@PathVariable int id, @RequestHeader("Accept") String header){
         User user = userService.getUserById(id);
         Set<Ticket> bookedTickets = ticketService.getBookedTicketsByUser(user);
@@ -38,14 +38,14 @@ public class BookedTicketsController {
         if(header.contains("application/pdf")){
             mv.setViewName("bookedTicketsByUserPdf");
         } else {
-            mv.setViewName("bookedTicketsByUser.ftl");
+            mv.setViewName("bookedTicketsByUser");
         }
         mv.addObject("tickets", bookedTickets);
         mv.addObject("user", user);
         return mv;
     }
 
-    @RequestMapping(value = "booked/by-event/{id}", method = GET)
+    @RequestMapping(value = "by-event/{id}", method = GET)
     public ModelAndView getBookedByEventView(@PathVariable int id, @RequestHeader("Accept") String header){
         Event event = eventService.getById(id);
         Set<Ticket> bookedTickets = ticketService.getBookedTicketsByEvent(event);

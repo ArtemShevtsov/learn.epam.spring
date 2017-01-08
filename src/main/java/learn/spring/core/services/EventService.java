@@ -32,7 +32,9 @@ public class EventService {
     @PostConstruct
     public void init(){
         Calendar c = Calendar.getInstance();
-        c.set(2016,Calendar.FEBRUARY,7,11,15);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND  , 0);
+        c.set(2017,Calendar.JANUARY,7,11,15);
         assignAuditorium(e1, a1, c.getTime());
 
         c.set(Calendar.HOUR_OF_DAY, 12);

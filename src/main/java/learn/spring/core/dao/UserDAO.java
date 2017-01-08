@@ -23,6 +23,7 @@ public class UserDAO implements EntityDAO<User> {
     private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM dict_users WHERE lower(firstName) = ?;";
     private static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM dict_users WHERE lower(email) = ?;";
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM dict_users WHERE id = ?;";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM dict_users;";
 
     /**
      * Users from Java Configuration stores in database
@@ -32,6 +33,11 @@ public class UserDAO implements EntityDAO<User> {
         for(User u: usersList){
             register(u);
         }
+    }
+
+
+    public List<User> getAllUsers(){
+        return jdbcTemplateEmbedded.query(SELECT_ALL_QUERY, entityRowMapper());
     }
 
     public User getUserById(Integer id){

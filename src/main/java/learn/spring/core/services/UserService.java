@@ -16,9 +16,6 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-//    @Autowired
-//    private TicketDAO ticketDAO;
-
     public User getUserById(Integer id){
         return userDAO.getUserById(id);
     }
@@ -31,6 +28,10 @@ public class UserService {
         return userDAO.getUsersByName(name);
     }
 
+    public List<User> getAllUsers(){
+        return userDAO.getAllUsers();
+    }
+
     public void register(User u){
         userDAO.register(u);
     }
@@ -39,8 +40,4 @@ public class UserService {
         userDAO.remove(user);
     }
 
-//    public Set<Ticket> getBookedTicketsByUser(User user){
-////        return ticketDAO.getBookedTicketsByUser(user);
-//        return userDAO.getUserById(user.getId()).getTicketSet();
-//    }
 }

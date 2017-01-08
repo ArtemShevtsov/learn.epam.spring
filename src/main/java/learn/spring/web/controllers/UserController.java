@@ -12,12 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("users")
 public class UserController {
     @Autowired
     UserService userService;
+
+    @RequestMapping(method = GET)
+    public ModelAndView getAllUsersView(){
+        ModelAndView mv = new ModelAndView("usersByAttributeView");
+        List<User> allUsers = userService.getAllUsers();
+        mv.addObject("usersModel", allUsers);
+        return mv;
+    }
 
     @RequestMapping(value = "by-name/{name}", method = GET)
     public ModelAndView getUsersByNameView(@PathVariable String name){
