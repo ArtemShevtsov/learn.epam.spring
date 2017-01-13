@@ -35,6 +35,7 @@ public class JsonFilesParser {
             String lastName = jsonObject.getString("lastName");
             String email = jsonObject.getString("email");
             String birthDayString = jsonObject.getString("birthDay");
+            String password = jsonObject.getString("password");
             Date birthDate = null;
             try {
                 birthDate = dateFormat.parse(birthDayString);
@@ -43,6 +44,7 @@ public class JsonFilesParser {
             }
 
             User user = new User(id, email, firstName, lastName, birthDate);
+            user.setPassword(password);
             usersList.add(user);
         });
         return usersList;

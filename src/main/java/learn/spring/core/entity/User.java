@@ -10,6 +10,8 @@ public class User {
     private String firstName;
     private String lastName;
     private Date birthDay;
+    private String password;
+    private String roles;
 
     private Map<Integer, Ticket> ticketMap = new HashMap<Integer, Ticket>();
     private Set<Ticket> ticketSet = new HashSet<Ticket>();
@@ -81,6 +83,22 @@ public class User {
     public void bookTicket(Ticket ticket) {
         ticketMap.put(ticketMap.size() + 1, ticket);
         ticketSet.add(ticket);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @Override

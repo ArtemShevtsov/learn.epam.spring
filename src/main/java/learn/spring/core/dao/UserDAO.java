@@ -1,6 +1,5 @@
 package learn.spring.core.dao;
 
-import learn.spring.core.entity.Ticket;
 import learn.spring.core.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class UserDAO implements EntityDAO<User> {
@@ -18,7 +16,8 @@ public class UserDAO implements EntityDAO<User> {
     @Autowired
     private List<User> usersList;
 
-    private static final String INSERT_QUERY = "INSERT INTO dict_users(id, email, firstName, lastName, birthDay) VALUES (?,?,?,?,?);";
+    private static final String INSERT_WITHOUT_ROLES_QUERY = "INSERT INTO dict_users(id, email, firstName, lastName, birthDay, password) VALUES (?,?,?,?,?,?);";
+    private static final String INSERT_WITH_ROLES_QUERY = "INSERT INTO dict_users(id, email, firstName, lastName, birthDay, password, roles) VALUES (?,?,?,?,?,?,?);";
     private static final String DELETE_QUERY = "DELETE FROM dict_users WHERE id = ?;";
     private static final String SELECT_BY_NAME_QUERY = "SELECT * FROM dict_users WHERE lower(firstName) = ?;";
     private static final String SELECT_BY_EMAIL_QUERY = "SELECT * FROM dict_users WHERE lower(email) = ?;";
@@ -56,12 +55,25 @@ public class UserDAO implements EntityDAO<User> {
     }
 
     public void register(User u){
-        jdbcTemplateEmbedded.update(INSERT_QUERY,
-                u.getId(),
-                u.getEmail(),
-                u.getFirstName(),
-                u.getLastName(),
-                u.getBirthDay());
+        String roles = u.getRoles();
+        if(roles != null && roles.trim().length() > 0){
+            jdbcTemplateEmbedded.update(INSERT_WITH_ROLES_QUERY,
+                    u.getId(),
+                    u.getEmail(),
+                    u.getFirstName(),
+                    u.getLastName(),
+                    u.getBirthDay(),
+                    u.getPassword(),
+                    u.getRoles());
+        } else {
+            jdbcTemplateEmbedded.update(INSERT_WITHOUT_ROLES_QUERY,
+                    u.getId(),
+                    u.getEmail(),
+                    u.getFirstName(),
+                    u.getLastName(),
+                    u.getBirthDay(),
+                    u.getPassword());
+        }
     }
 
     public void remove(User user){
@@ -71,12 +83,18 @@ public class UserDAO implements EntityDAO<User> {
 
     @Override
     public RowMapper<User> entityRowMapper(){
-        return (rs, rowNum) -> new User(
-                rs.getInt("id"),
-                rs.getString("email"),
-                rs.getString("firstName"),
-                rs.getString("lastName"),
-                rs.getDate("birthDay")
-        );
+        RowMapper<User> rowMapper = (rs, rowNum) -> {
+            User user = new User(
+                    rs.getInt("id"),
+                    rs.getString("email"),
+                    rs.getString("firstName"),
+                    rs.getString("lastName"),
+                    rs.getDate("birthDay")
+            );
+            user.setPassword(rs.getString("password"));
+            user.setRoles(rs.getString("roles"));
+            return user;
+        };
+        return rowMapper;
     }
 }

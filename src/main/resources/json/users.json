@@ -4,20 +4,23 @@
     firstName: "Vasiliy",
     lastName: "Juravlev",
     email: "vasil.jur@mail.com",
-    birthDay: "15/07/1977"
+    birthDay: "15/07/1977",
+    password: "vasil.jur"
   },
   {
     id: 14,
     firstName: "Semen",
     lastName: "Cvetkov",
     email: "semen@mail.com",
-    birthDay: "07/11/1988"
+    birthDay: "07/11/1988",
+    password: "semen"
   },
   {
     id: 15,
     firstName: "Pavel",
     lastName: "Kurin",
     email: "kurisha@mail.com",
-    birthDay: "13/10/1981"
+    birthDay: "13/10/1981",
+    password: "kurisha"
   }
 ]

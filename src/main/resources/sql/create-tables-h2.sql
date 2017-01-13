@@ -3,7 +3,9 @@ create table dict_users(
     email varchar(30),
     firstName varchar(30),
     lastName varchar(30),
-    birthDay date
+    birthDay date,
+    password varchar (512),
+    roles varchar (256) DEFAULT 'RESGISTERED_USER'
 );
 
 create table dict_auditoriums(
