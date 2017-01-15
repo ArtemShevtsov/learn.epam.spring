@@ -10,6 +10,10 @@
         padding-bottom: 10px;
     }
 </style>
+<div id="header" style="display: inline-block; width: 100%">
+    <h4 style="float: right;"><a href="/j_spring_security_logout">Log Out</a></h4>
+</div>
+<hr>
 <form method="post" action="/book-ticket">
     <div class="line">
         <label for="user">Select User you want to book ticket for</label>

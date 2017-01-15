@@ -6,6 +6,8 @@ import learn.spring.core.entity.User;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,7 +25,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * Created by aftor on 07.01.17.
  */
 public class JsonFilesParser {
-    public List<User> parseUsers(MultipartFile file) throws IOException {
+
+    public List<User> parseUsers(MultipartFile file, PasswordEncoder passwordEncoder) throws IOException {
         ArrayList<User> usersList = new ArrayList<>();
         String content = getStringFromFile(file);
         JSONArray jsonArr = new JSONArray(content);
@@ -44,7 +47,7 @@ public class JsonFilesParser {
             }
 
             User user = new User(id, email, firstName, lastName, birthDate);
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             usersList.add(user);
         });
         return usersList;

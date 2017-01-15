@@ -7,6 +7,7 @@ import learn.spring.core.services.UserService;
 import learn.spring.exception.UnprocessableFileFormatExcepption;
 import learn.spring.utils.JsonFilesParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,9 @@ public class UploadController {
     @Autowired
     EventService eventService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @RequestMapping(value = "upload", method = GET)
     public ModelAndView showUploadPage(){
         ModelAndView mv = new ModelAndView("uploadPage");
@@ -51,7 +55,7 @@ public class UploadController {
         JsonFilesParser jsonFilesParser = new JsonFilesParser();
 
         if(!users.isEmpty()){
-            List<User> userList = jsonFilesParser.parseUsers(users);
+            List<User> userList = jsonFilesParser.parseUsers(users, passwordEncoder);
             userList.forEach(user -> {
                 userService.register(user);
             });

@@ -1,9 +1,10 @@
-<div id="header">
+<div id="header" style="display: inline-block; width: 100%">
     <#if attribute??>
-        <h2>User(s) By ${attribute} ${attributeName}:</h2>
+        <h2 style="float: left;">User(s) By ${attribute} ${attributeName}:</h2>
     <#else>
-        <h2>All Users:</h2>
+        <h2 style="float: left;">All Users:</h2>
     </#if>
+    <h4 style="float: right;"><a href="/j_spring_security_logout">Log Out</a></h4>
 </div>
 <hr>
 

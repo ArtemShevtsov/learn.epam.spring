@@ -21,6 +21,7 @@ public class UsersConfig {
     public User user1() throws ParseException {
         User user = new User(1, "vasya@mail.com", "Valiliy", "Pupkin", dateFormat.parse("1989-01-18"));
         user.setPassword(passwordEncoder.encode("vasya"));
+        user.setRoles("RESGISTERED_USER, BOOKING_MANAGER");
         return user;
     }
 
@@ -28,6 +29,7 @@ public class UsersConfig {
     public User user2() throws ParseException {
         User user = new User(2, "ivan@mail.com", "Ivan", "Petrov", dateFormat.parse("1972-07-08"));
         user.setPassword(passwordEncoder.encode("ivan"));
+        user.setRoles("RESGISTERED_USER, BOOKING_MANAGER");
         return user;
     }
 

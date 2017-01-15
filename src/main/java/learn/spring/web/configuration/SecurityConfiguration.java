@@ -61,7 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers("/users").hasRole("RESGISTERED_USER")
-                .mvcMatchers("/login", "/", "/index", "home").permitAll()
+                .mvcMatchers("booked", "/booked/**", "book-ticket").hasRole("BOOKING_MANAGER")
+                .mvcMatchers("/login", "/", "/index", "home", "accessDenied").permitAll()
                 .and()
                 .formLogin().loginProcessingUrl("/j_spring_security_check").loginPage("/login").failureUrl("/login?error")
                 .usernameParameter("user").passwordParameter("pass")
@@ -69,6 +70,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/j_spring_security_logout").logoutSuccessUrl("/login?logout")
                 .and()
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(28_800)
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
                 .csrf().disable();
     }

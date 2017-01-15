@@ -18,6 +18,11 @@ public class MainController {
         return new ModelAndView("home");
     }
 
+    @RequestMapping(method = GET, value = "accessDenied")
+    public ModelAndView accessDenied(){
+        return new ModelAndView("accessDenied");
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error,
