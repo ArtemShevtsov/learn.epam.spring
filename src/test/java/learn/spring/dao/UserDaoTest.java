@@ -57,13 +57,7 @@ public class UserDaoTest {
         postConsructMethod.invoke(userDAO);
 
         Object[] params = {testUser.getId()};
-        User resultUser = jdbcTemplate.queryForObject("select * from dict_users where id = ?;", params, (rs, rowNum) -> new User(
-                rs.getInt("id"),
-                rs.getString("email"),
-                rs.getString("firstName"),
-                rs.getString("lastName"),
-                rs.getDate("birthDay")
-        ));
+        User resultUser = jdbcTemplate.queryForObject("select * from dict_users where id = ?;", params, userDAO.entityRowMapper());
 
         assertNotNull(resultUser);
         assertEquals(testUser, resultUser);

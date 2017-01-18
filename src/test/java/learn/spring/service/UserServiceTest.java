@@ -27,7 +27,7 @@ public class UserServiceTest {
     // TODO: +3% tests are partially implemented
 
     @Autowired
-    User testUser;
+    User testUser_1;
     EventAuditorium testEventAuditorium;
     Ticket testTicket;
 
@@ -54,54 +54,54 @@ public class UserServiceTest {
         testTicket = new Ticket();
         testTicket.setEventAuditorium(testEventAuditorium);
         testTicket.setSeat(9);
-        testUser.bookTicket(testTicket);
+        testUser_1.bookTicket(testTicket);
     }
 
     @Test
     public void testGetUserById(){
-        assertNotNull(testUser);
+        assertNotNull(testUser_1);
 
-        when(userDaoMock.getUserById(testUser.getId())).thenReturn(testUser);
-        assertEquals(testUser, userService.getUserById(testUser.getId()));
-        verify(userDaoMock, times(1)).getUserById(testUser.getId());
+        when(userDaoMock.getUserById(testUser_1.getId())).thenReturn(testUser_1);
+        assertEquals(testUser_1, userService.getUserById(testUser_1.getId()));
+        verify(userDaoMock, times(1)).getUserById(testUser_1.getId());
     }
 
     @Test
     public void testGetUserbyEmail(){
-        assertNotNull(testUser);
+        assertNotNull(testUser_1);
 
-        when(userDaoMock.getUserByEmail(testUser.getEmail())).thenReturn(testUser);
-        assertEquals(testUser, userService.getUserByEmail(testUser.getEmail()));
+        when(userDaoMock.getUserByEmail(testUser_1.getEmail())).thenReturn(testUser_1);
+        assertEquals(testUser_1, userService.getUserByEmail(testUser_1.getEmail()));
     }
 
     @Test
     public void testGetUserbyName(){
-        assertNotNull(testUser);
+        assertNotNull(testUser_1);
         List<User> users = new ArrayList<User>();
-        users.add(testUser);
-        when(userDaoMock.getUsersByName(testUser.getFirstName())).thenReturn(users);
-        assertEquals(users, userService.getUsersByName(testUser.getFirstName()));
+        users.add(testUser_1);
+        when(userDaoMock.getUsersByName(testUser_1.getFirstName())).thenReturn(users);
+        assertEquals(users, userService.getUsersByName(testUser_1.getFirstName()));
     }
 
     @Test
     public void testRegisterUser(){
-        userService.register(testUser);
-        verify(userDaoMock).register(testUser);
+        userService.register(testUser_1);
+        verify(userDaoMock).register(testUser_1);
     }
 
     @Test
     public void testRemoveUser() {
-        userService.remove(testUser);
-        verify(userDaoMock).remove(testUser);
+        userService.remove(testUser_1);
+        verify(userDaoMock).remove(testUser_1);
     }
 
 //    @Test
 //    public void testGetBookedTickets() {
-//        assertNotNull(testUser);
-//        when(userDaoMock.getUserById(testUser.getId())).thenReturn(testUser);
+//        assertNotNull(testUser_1);
+//        when(userDaoMock.getUserById(testUser_1.getId())).thenReturn(testUser_1);
 //        Set<Ticket> ticketSet= new HashSet<Ticket>();
 //        ticketSet.add(testTicket);
-//        assertEquals(ticketSet, userService.getBookedTicketsByUser(testUser));
-//        verify(userDaoMock).getUserById(testUser.getId());
+//        assertEquals(ticketSet, userService.getBookedTicketsByUser(testUser_1));
+//        verify(userDaoMock).getUserById(testUser_1.getId());
 //    }
 }
