@@ -1,6 +1,7 @@
 <div id="header" style="display: inline-block; width: 100%">
     <h4 style="float: right;"><a href="/j_spring_security_logout">Log Out</a></h4>
 </div>
+<h3>${}</h3>
 <hr>
 <form method="post" enctype="multipart/form-data" action="/upload">
     <div>

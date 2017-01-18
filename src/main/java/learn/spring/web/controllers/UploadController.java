@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,8 +39,17 @@ public class UploadController {
 
     @RequestMapping(value = "upload", method = GET)
     public ModelAndView showUploadPage(){
+//        @ModelAttribute("ID") int id
+//        System.out.println("\n\n\n\n------------showUploadPage--" + id + "--------\n\n\n\n");
+        System.out.println("\n\n\n\n------------showUploadPage----------\n\n\n\n");
         ModelAndView mv = new ModelAndView("uploadPage");
         return mv;
+    }
+
+    @ModelAttribute("ID")
+    public int modelAttr(@RequestParam(value = "id", required = false) Integer id) {
+        System.out.println("\n\n\n\n------------modelAttr---" + id + "-------\n\n\n\n");
+        return id;
     }
 
     @RequestMapping(value = "upload", method = POST)
