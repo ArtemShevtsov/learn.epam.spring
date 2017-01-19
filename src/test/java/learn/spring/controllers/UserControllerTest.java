@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -66,7 +67,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void userPage_users_byName_name__shoulRender_usersByNamePage() throws Exception {
+    public void userPage_users_byName__shoulRender_usersByNamePage() throws Exception {
         User user = userList.get(0);
         String firstName = user.getFirstName();
 
@@ -80,6 +81,42 @@ public class UserControllerTest {
                 .andExpect(model().attribute("attributeName", firstName));
 
         verify(userService, times(1)).getUsersByName(firstName);
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void userPage_byId__shouldRender_userByIdPage() throws Exception {
+        User user = userList.get(0);
+        Integer id = user.getId();
+
+        when(userService.getUserById(id)).thenReturn(user);
+
+        mockMvc.perform(get("/users/by-id/" + id.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name(modelName))
+                .andExpect(model().attribute("usersModel", Arrays.asList(user)))
+                .andExpect(model().attribute("attribute", "ID"))
+                .andExpect(model().attribute("attributeName", id));
+
+        verify(userService, times(1)).getUserById(id);
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void userPage_byEmail__shouldRendr_userByEmail() throws Exception {
+        User user = userList.get(0);
+        String email = user.getEmail();
+
+        when(userService.getUserByEmail(email)).thenReturn(user);
+
+        mockMvc.perform(get("/users/by-email").param("mail", email))
+                .andExpect(status().isOk())
+                .andExpect(view().name(modelName))
+                .andExpect(model().attribute("usersModel", Arrays.asList(user)))
+                .andExpect(model().attribute("attribute", "e-mail"))
+                .andExpect(model().attribute("attributeName", email));
+
+        verify(userService, times(1)).getUserByEmail(email);
         verifyNoMoreInteractions(userService);
     }
 }

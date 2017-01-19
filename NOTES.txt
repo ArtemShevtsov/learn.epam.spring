@@ -1,0 +1,3 @@
+- Configured base URL to "/" for tomcat7 and jetty plugins
+- Added README.md file
+- Added few tests for controllers
