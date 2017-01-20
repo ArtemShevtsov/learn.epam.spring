@@ -8,6 +8,7 @@ import learn.spring.utils.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import learn.spring.core.dao.TicketDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 import static learn.spring.core.dao.TicketDAO.*;
 
@@ -47,6 +48,7 @@ public class BookingService {
         return sumPrice - (sumPrice*discountService.getDiscount(user, event, date).getPercent()/100.);
     }
 
+    @Transactional
     public boolean bookTicket(User user, Ticket ticket){
         return ticketDAO.bookTicket(user, ticket);
     }
