@@ -1,3 +1,9 @@
 - Configured base URL to "/" for tomcat7 and jetty plugins
 - Added README.md file
 - Added few tests for controllers
+
+---------------------------------------------------------------------------------
+
+- Configured Spring Transactions
+- Added "UserAccount" entity and DAO
+- method for refilling and for acces to UserAccount implemented in UserService

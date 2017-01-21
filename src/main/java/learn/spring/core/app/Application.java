@@ -51,7 +51,7 @@ public class Application {
      * In Application I tried to use both XML and Annotation configurations
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext annotationCtx = new AnnotationConfigApplicationContext();
         annotationCtx.register(Application.class);
         annotationCtx.refresh();
@@ -68,7 +68,7 @@ public class Application {
     }
 
     @PostConstruct
-    private void initializeData(){
+    private void initializeData() throws Exception {
         t = new Ticket();
         t1 = new Ticket();
         t2 = new Ticket();
@@ -80,13 +80,13 @@ public class Application {
         eventService.getByName("Django Unchained").getBasePrice();
         t.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
         t.setSeat(8);
-        bookingService.bookTicket(u1, t);
+//        bookingService.bookTicket(u1, t);
         t1.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByEvent(eventService.getByName("The Martian")).iterator().next());
         t1.setSeat(9);
-        bookingService.bookTicket(u1, t1);
+//        bookingService.bookTicket(u1, t1);
         t2.setEventAuditorium(eventAuditoriumDAO.getEventAuditoriumByAuditorium(auditoriumService.getById(2)).iterator().next());
         t2.setSeat(5);
-        bookingService.bookTicket(u2, t2);
+//        bookingService.bookTicket(u2, t2);
         discountService.getDiscount(u1, eventService.getByName("The Martian"), t.getEventAuditorium().getDateAndTime());
         discountService.getDiscount(u1, eventService.getByName("The Martian"), t1.getEventAuditorium().getDateAndTime());
         discountService.getDiscount(u2, eventService.getByName("Interstellar"), t2.getEventAuditorium().getDateAndTime());

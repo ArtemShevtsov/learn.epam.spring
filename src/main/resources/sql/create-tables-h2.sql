@@ -5,7 +5,8 @@ create table dict_users(
     lastName varchar(30),
     birthDay date,
     password varchar (512),
-    roles varchar (256) DEFAULT 'RESGISTERED_USER'
+    roles varchar (256) DEFAULT 'RESGISTERED_USER',
+    availableMoney double DEFAULT 500
 );
 
 create table dict_auditoriums(

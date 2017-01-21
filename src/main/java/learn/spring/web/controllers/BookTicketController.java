@@ -56,7 +56,7 @@ public class BookTicketController {
     @RequestMapping(method = POST)
     public ModelAndView bookTicket(@RequestParam Integer userId, @RequestParam Integer eventId,
                                    @RequestParam Integer auditoriumId, @RequestParam Integer seat,
-                                   @RequestParam Date date){
+                                   @RequestParam Date date) throws Exception {
         Event event = eventService.getById(eventId);
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         User user = userService.getUserById(userId);

@@ -1,10 +1,12 @@
 package learn.spring.core.services;
 
 import learn.spring.core.dao.TicketDAO;
+import learn.spring.core.dao.UserAccountDAO;
 import learn.spring.core.dao.UserDAO;
 
 import learn.spring.core.entity.Ticket;
 import learn.spring.core.entity.User;
+import learn.spring.core.entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.Set;
 public class UserService {
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private UserAccountDAO userAccountDAO;
 
     public User getUserById(Integer id){
         return userDAO.getUserById(id);
@@ -40,4 +44,15 @@ public class UserService {
         userDAO.remove(user);
     }
 
+    public UserAccount getUserAccountByUser(User user){
+        return userAccountDAO.getAccountByUser(user);
+    }
+
+    public UserAccount doRefillAccount(UserAccount userAccount, Double refillAmount) throws Exception {
+        double sum = Double.sum(userAccount.getAvailableMoney(), refillAmount);
+        if(sum < 0){
+            throw new Exception("User Balance must be more than zero!");
+        }
+        return userAccountDAO.updateBalance(userAccount, refillAmount);
+    }
 }

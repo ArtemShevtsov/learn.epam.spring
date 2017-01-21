@@ -3,6 +3,7 @@ package learn.spring.core.services;
 
 import learn.spring.core.dao.EventAuditoriumDAO;
 import learn.spring.core.entity.*;
+import learn.spring.exception.NotEnoughMoneyException;
 import learn.spring.exception.SessionNotFoundException;
 import learn.spring.utils.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class BookingService {
 
     @Autowired
     DiscountService discountService;
+    @Autowired
+    UserService userService;
 
     @Autowired
     TicketDAO ticketDAO;
@@ -49,8 +52,22 @@ public class BookingService {
     }
 
     @Transactional
-    public boolean bookTicket(User user, Ticket ticket){
-        return ticketDAO.bookTicket(user, ticket);
+    public boolean bookTicket(User user, Ticket ticket) throws SessionNotFoundException, NotEnoughMoneyException, Exception {
+        Double ticketPrice = getTicketPrice(
+                ticket.getEventAuditorium().getEvent(),
+                ticket.getEventAuditorium().getDateAndTime(),
+                new int[]{ticket.getSeat()},
+                user
+        );
+        UserAccount userAccount = userService.getUserAccountByUser(user);
+        double balance = Double.sum(userAccount.getAvailableMoney(), ticketPrice * -1);
+        if(balance < 0){
+            throw new NotEnoughMoneyException(String.format("Ticket is too expensive. Price: %,.2f; balance: %,.2f",
+                    ticketPrice, userAccount.getAvailableMoney()));
+        } else {
+            userService.doRefillAccount(userAccount, ticketPrice*-1);
+            return ticketDAO.bookTicket(user, ticket);
+        }
     }
 
     public boolean isEventAuditoriumPresent(EventAuditorium ea){
