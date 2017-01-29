@@ -1,11 +1,26 @@
 package learn.spring.core.entity;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Event")
 public class Event {
+    @XmlAttribute
     private Integer id;
+    @XmlAttribute
     private String name;
+    @XmlAttribute
     private Double basePrice;
+    @XmlAttribute
     private EventRating rating;
+    @XmlAttribute
     private Integer minutesLength;
+
+    public Event() {
+    }
 
     public Event(Integer id, String name, Double basePrice, EventRating rating, Integer minutesLength) {
         this.id = id;

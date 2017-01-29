@@ -11,6 +11,9 @@ public class EventAuditorium {
     private Auditorium auditorium;
     private Date dateAndTime;
 
+    public EventAuditorium() {
+    }
+
     public EventAuditorium(Event event, Auditorium auditorium, Date dateAndTime) {
         this.event = event;
         this.auditorium = auditorium;

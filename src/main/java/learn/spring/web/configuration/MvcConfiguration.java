@@ -24,7 +24,8 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
         "learn.spring.core.services",
         "learn.spring.core.aspects",
         "learn.spring.web.configuration",
-        "learn.spring.web.controllers"
+        "learn.spring.web.controllers",
+        "learn.spring.web.endpoints"
 })
 public class MvcConfiguration  extends WebMvcConfigurerAdapter {
     @Override

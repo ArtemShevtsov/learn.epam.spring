@@ -8,6 +8,9 @@ public class Auditorium {
     private Integer numberOfSeats;
     private Integer[] vipSeats;
 
+    public Auditorium() {
+    }
+
     public Auditorium(Integer id, String name, Integer numberOfSeats, Integer[] vipSeats) {
         this.id = id;
         this.name = name;

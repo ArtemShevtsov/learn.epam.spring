@@ -7,3 +7,16 @@
 - Configured Spring Transactions
 - Added "UserAccount" entity and DAO
 - method for refilling and for acces to UserAccount implemented in UserService
+
+---------------------------------------------------------------------------------
+
+
+Schema generation based on annotated JAXB classes:
+schemagen -d src/main/resources/schema/ -cp target/classes/ src/main/java/learn/spring/core/entity/User.java src/main/java/learn/spring/core/entity/Event.java
+
+Java classes generation based on schema:
+xjc -d src/main/java/ -p learn.spring.core.entity.generated src/main/resources/schema/schema1.xsd
+
+
+
+java.lang.IllegalStateException: No unique WebApplicationContext found: more than one DispatcherServlet registered with publishContext=true?
