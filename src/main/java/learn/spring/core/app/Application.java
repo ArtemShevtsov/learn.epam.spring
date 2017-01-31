@@ -92,7 +92,7 @@ public class Application {
         discountService.getDiscount(u2, eventService.getByName("Interstellar"), t2.getEventAuditorium().getDateAndTime());
 
         String url = "jdbc:h2:mem:springH2DataSource";
-        DatabaseManagerSwing.main(new String[] { "--url", url, "--user", "sa", "--password", "" });
+//        DatabaseManagerSwing.main(new String[] { "--url", url, "--user", "sa", "--password", "" });
     }
 
     private void showCounterAspectWork(){

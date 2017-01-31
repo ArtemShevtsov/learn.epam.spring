@@ -14,14 +14,20 @@ import java.util.List;
  */
 @Endpoint
 public class UserEndpoint {
-    private static final String NAMESPACE_URI = "http://example.com/booking-web-service";
+    private static final String NAMESPACE_URI = "http://localhost:8090/";
 
     @Autowired
     UserService userService;
 
     @ResponsePayload
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsers")
-    public List<User> getAllUsers (){
-        return userService.getAllUsers();
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getFirstUser")
+    public User getFirstUser (){
+        return userService.getAllUsers().get(0);
+    }
+
+    @ResponsePayload
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByEmail")
+    public User getUserByEmail (){
+        return userService.getAllUsers().get(1);
     }
 }

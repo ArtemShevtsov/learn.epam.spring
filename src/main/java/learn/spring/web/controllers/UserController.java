@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -22,6 +21,7 @@ public class UserController {
 
     @RequestMapping(method = GET)
     public ModelAndView getAllUsersView(){
+
         ModelAndView mv = new ModelAndView("usersByAttributeView");
         List<User> allUsers = userService.getAllUsers();
         mv.addObject("usersModel", allUsers);

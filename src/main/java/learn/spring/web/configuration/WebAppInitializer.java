@@ -17,6 +17,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 //        Creates the root Spring App Context
         AnnotationConfigWebApplicationContext webAppContext = new AnnotationConfigWebApplicationContext();
         webAppContext.register(MvcConfiguration.class);
+        servletContext.addListener(new ContextLoaderListener(webAppContext));
 
 //        Creates the dispatcher Servlet
         ServletRegistration.Dynamic dispatcher = servletContext
@@ -25,11 +26,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
 
 
-//        MessageDispatcherServlet servlet = new MessageDispatcherServlet(webAppContext);
-//        servlet.setTransformSchemaLocations(true);
-//
-//        ServletRegistration.Dynamic WsDispatcher = servletContext.addServlet("dispatcher-ws", servlet);
-//        WsDispatcher.addMapping("/ws/");
-//        WsDispatcher.setLoadOnStartup(1);
+
+        AnnotationConfigWebApplicationContext webAppContext1 = new AnnotationConfigWebApplicationContext();
+        webAppContext1.setParent(webAppContext);
+        MessageDispatcherServlet servlet = new MessageDispatcherServlet(webAppContext1);
+        servlet.setTransformSchemaLocations(true);
+
+        ServletRegistration.Dynamic WsDispatcher = servletContext.addServlet("dispatcher-ws", servlet);
+        WsDispatcher.addMapping("/ws/*");
+        WsDispatcher.setLoadOnStartup(1);
     }
 }
