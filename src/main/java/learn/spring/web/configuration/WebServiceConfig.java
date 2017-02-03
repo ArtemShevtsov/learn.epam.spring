@@ -2,6 +2,7 @@ package learn.spring.web.configuration;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -17,7 +18,7 @@ import org.springframework.xml.xsd.XsdSchema;
  * Created by aftor on 29.01.17.
  */
 @EnableWs
-@Component
+@Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Bean(name="booking")
@@ -25,7 +26,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("BookingAppPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://localhost:8090/");
+        wsdl11Definition.setTargetNamespace("http://localhost:8090/ws");
         wsdl11Definition.setSchema(schema);
         return wsdl11Definition;
     }

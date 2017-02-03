@@ -1,34 +1,32 @@
 package learn.spring.core.entity;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.*;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "User")
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlRootElement(name="user", namespace = "http://localhost:8090")
+//@XmlRootElement(name="user")
+//@XmlType(name="user-type")
 public class User {
 
-    @XmlAttribute
+//    @XmlAttribute
     private Integer id;
-    @XmlAttribute
+//    @XmlAttribute
     private String email;
-    @XmlAttribute
+//    @XmlAttribute
     private String firstName;
-    @XmlAttribute
+//    @XmlAttribute
     private String lastName;
-    @XmlAttribute
+//    @XmlAttribute
     private Date birthDay;
     private String password;
-    @XmlAttribute
+//    @XmlAttribute
     private String roles;
 
     private Map<Integer, Ticket> ticketMap = new HashMap<Integer, Ticket>();
     private Set<Ticket> ticketSet = new HashSet<Ticket>();
 
-    public User() {
-    }
+    public User(){}
 
     public User(Integer id, String email, String fName, String lName, Date birthDay) {
         this.id = id;
