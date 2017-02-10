@@ -1,18 +1,28 @@
 package learn.spring.web.configuration;
 
+import learn.spring.web.messageconverters.TicketPdfMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+import org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -29,16 +39,17 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 })
 public class MvcConfiguration  extends WebMvcConfigurerAdapter {
     @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new TicketPdfMessageConverter());
+        super.configureMessageConverters(converters);
+    }
+
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-//    @Override
-//    public void configureViewResolvers(ViewResolverRegistry registry) {
-//        super.configureViewResolvers(registry);
-//        registry.jsp("/WEB-INF/views/", ".jsp");
-//    }
     @Bean
     public FreeMarkerViewResolver freeMarkerViewResolver(){
         FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
@@ -69,7 +80,15 @@ public class MvcConfiguration  extends WebMvcConfigurerAdapter {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
+//        resolver.setOrder(2);
+        return resolver;
+    }
 
+    @Bean
+    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
+        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+        resolver.setContentNegotiationManager(manager);
+        resolver.setOrder(1);
         return resolver;
     }
 

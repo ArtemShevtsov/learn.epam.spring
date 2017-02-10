@@ -1,0 +1,16 @@
+[
+  {
+    id: 10,
+    name: "500 days of summer",
+    basePrice: 30.2,
+    minutesLength: 93,
+    ratingId: 3
+  },
+  {
+    id: 15,
+    name: "Ruby Sparks",
+    basePrice: 62.5,
+    minutesLength: 102,
+    ratingId: 3
+  }
+]

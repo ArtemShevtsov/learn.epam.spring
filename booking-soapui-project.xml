@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="d1f5576b-e96a-4dd1-bf69-6b42fe3fab61" activeEnvironment="Default" name="booking" resourceRoot="" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="54c8f14e-4873-4d7b-b48e-1f98055b8664" wsaVersion="NONE" name="BookingAppPortSoap11" type="wsdl" bindingName="{http://localhost:8090/ws}BookingAppPortSoap11" soapVersion="1_1" anonymous="optional" definition="http://localhost:8090/ws/booking.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8090/ws/booking.wsdl"><con:part><con:url>http://localhost:8090/ws/booking.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://localhost:8090/ws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://localhost:8090/ws" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://localhost:8090/ws">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://localhost:8090/ws" version="1.0" xmlns:ns1="http://localhost:8090/ws" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="eventCollectionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="eventCollection" type="tns:event"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="eventResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="eventValue" type="tns:event"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getEventByName">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="eventName" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getUserByEmail">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userEmail" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getUserById">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userId" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="userCollectionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="userCollection" type="tns:user"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="userResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userValue" type="tns:user"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="event">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="basePrice" type="xs:double"/>
+          <xs:element minOccurs="0" name="id" type="xs:int"/>
+          <xs:element minOccurs="0" name="minutesLength" type="xs:int"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="rating" type="tns:eventRating"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="user">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="birthDay" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="id" type="xs:int"/>
+          <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+          <xs:element minOccurs="0" name="password" type="xs:string"/>
+          <xs:element minOccurs="0" name="roles" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ticketSet" nillable="true" type="tns:ticket"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ticket">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="eventAuditorium" type="tns:eventAuditorium"/>
+          <xs:element minOccurs="0" name="seat" type="xs:int"/>
+          <xs:element minOccurs="0" name="user" type="tns:user"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="eventAuditorium">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="auditorium" type="tns:auditorium"/>
+          <xs:element minOccurs="0" name="dateAndTime" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="event" type="tns:event"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="auditorium">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:int"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="numberOfSeats" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="vipSeats" nillable="true" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="eventRating">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="HIGHT"/>
+          <xs:enumeration value="MIDDLE"/>
+          <xs:enumeration value="LOW"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="eventCollectionResponse">
+    <wsdl:part element="tns:eventCollectionResponse" name="eventCollectionResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="userCollectionResponse">
+    <wsdl:part element="tns:userCollectionResponse" name="userCollectionResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="userResponse">
+    <wsdl:part element="tns:userResponse" name="userResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="eventResponse">
+    <wsdl:part element="tns:eventResponse" name="eventResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BookingAppPort">
+    <wsdl:operation name="eventCollection">
+      <wsdl:output message="tns:eventCollectionResponse" name="eventCollectionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="userCollection">
+      <wsdl:output message="tns:userCollectionResponse" name="userCollectionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="user">
+      <wsdl:output message="tns:userResponse" name="userResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="event">
+      <wsdl:output message="tns:eventResponse" name="eventResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookingAppPortSoap11" type="tns:BookingAppPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="eventCollection">
+      <soap:operation soapAction=""/>
+      <wsdl:output name="eventCollectionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="userCollection">
+      <soap:operation soapAction=""/>
+      <wsdl:output name="userCollectionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="user">
+      <soap:operation soapAction=""/>
+      <wsdl:output name="userResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="event">
+      <soap:operation soapAction=""/>
+      <wsdl:output name="eventResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookingAppPortService">
+    <wsdl:port binding="tns:BookingAppPortSoap11" name="BookingAppPortSoap11">
+      <soap:address location="/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8090/ws</con:endpoint></con:endpoints><con:operation id="0bb36de4-52ee-44ee-ad50-34fa3544e3d4" isOneWay="false" action="" name="user" bindingOperationName="user" type="Notification" outputName="userResponse" inputName="" receivesAttachments="false" anonymous="optional"><con:settings/><con:call id="c3e7e1da-eb85-4373-b905-0f552664869d" name="getUserById (3)"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint xsi:nil="true"/><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://localhost:8090/ws">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <getUserById xmlns="http://localhost:8090/ws">
+        <userId>3</userId>
+      </getUserById>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:call><con:call id="d53c68cd-76b0-4e90-b124-23404d5b7223" name="getUserByEmail (orest_next@mail.com)"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://localhost:8090/ws">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <getUserByEmail xmlns="http://localhost:8090/ws">
+        <userEmail>orest_next@mail.com</userEmail>
+      </getUserByEmail>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="13996764-c4ff-473e-a100-c2c3f893d920" isOneWay="false" action="" name="eventCollection" bindingOperationName="eventCollection" type="Notification" outputName="eventCollectionResponse" inputName="" receivesAttachments="false" anonymous="optional"><con:settings/><con:call id="06cb99ce-d1e0-4e71-acd2-8ceb608e31ab" name="getAllEvents"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://localhost:8090/ws">
+	<soapenv:Header/>
+   <soapenv:Body>
+		<getAllEvents xmlns="http://localhost:8090/ws" />
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="750dcbfd-3994-47ec-a2e0-a43fba93d5fb" isOneWay="false" action="" name="userCollection" bindingOperationName="userCollection" type="Notification" outputName="userCollectionResponse" inputName="" receivesAttachments="false" anonymous="optional"><con:settings/><con:call id="4d020fcb-a8ce-4911-9ade-f06daed35480" name="getAllUsers"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://localhost:8090/ws">
+	<soapenv:Header/>
+   <soapenv:Body>
+		<getAllUsers xmlns="http://localhost:8090/ws"></getAllUsers>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="f38c77bc-0751-496c-987d-28a63b2ebefa" isOneWay="false" action="" name="event" bindingOperationName="event" type="Notification" outputName="eventResponse" inputName="" receivesAttachments="false" anonymous="optional"><con:settings/><con:call id="491e5ae1-2ee9-40fd-a47f-06966e189812" name="getEventByName (&quot;Django Unchained&quot;)"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8090/ws</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://localhost:8090/ws">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <getEventByName xmlns="http://localhost:8090/ws">
+        <eventName>Django Unchained</eventName>
+      </getEventByName>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
